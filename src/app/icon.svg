@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <!-- Favicon Version -->
+    <g transform="scale(0.5)">
+      <circle cx="100" cy="100" r="90" fill="#2B6CB0"/>
+      <circle cx="100" cy="100" r="85" fill="white"/>
+      <path d="M100 35 L106 90 L165 100 L106 110 L100 165 L94 110 L35 100 L94 90 Z" fill="#2B6CB0"/>
+      <circle cx="100" cy="100" r="30" fill="white"/>
+      <circle cx="100" cy="100" r="25" fill="#2B6CB0"/>
+      <circle cx="100" cy="100" r="20" fill="white"/>
+      <circle cx="100" cy="100" r="5" fill="#2B6CB0"/>
+      <text x="100" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">N</text>
+      <text x="175" y="105" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">E</text>
+      <text x="100" y="180" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">S</text>
+      <text x="25" y="105" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">W</text>
+    </g>
+</svg>

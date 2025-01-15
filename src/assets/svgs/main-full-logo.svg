@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 100">
+  <!-- Main Full Logo -->
+    <!-- Compass icon (scaled down from original) -->
+    <g transform="scale(0.5)">
+      <circle cx="100" cy="100" r="90" fill="#2B6CB0"/>
+      <circle cx="100" cy="100" r="85" fill="white"/>
+      <path d="M100 35 L106 90 L165 100 L106 110 L100 165 L94 110 L35 100 L94 90 Z" fill="#2B6CB0"/>
+      <circle cx="100" cy="100" r="30" fill="white"/>
+      <circle cx="100" cy="100" r="25" fill="#2B6CB0"/>
+      <circle cx="100" cy="100" r="20" fill="white"/>
+      <circle cx="100" cy="100" r="5" fill="#2B6CB0"/>
+      <text x="100" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">N</text>
+      <text x="175" y="105" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">E</text>
+      <text x="100" y="180" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">S</text>
+      <text x="25" y="105" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">W</text>
+    </g>
+    
+    <!-- Company name and slogan -->
+    <text x="110" y="60" font-family="Arial" font-size="32" font-weight="bold" fill="#2B6CB0">
+      Job<tspan fill="#1A365D">Compass</tspan>
+    </text>
+    <text x="120" y="85" font-family="Arial" font-size="14" fill="#4A5568">Navigate your career, find your future</text>
+</svg>
