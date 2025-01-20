@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/JobCompass-Frontend.iml" filepath="$PROJECT_DIR$/.idea/JobCompass-Frontend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/jobcompass-frontend.iml" filepath="$PROJECT_DIR$/.idea/jobcompass-frontend.iml" />
     </modules>
   </component>
 </project>
