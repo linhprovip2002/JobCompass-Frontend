@@ -1,22 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 235 70">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 12">
   <!-- Header Version (Compact) -->
     <!-- Compass icon (smaller scale) -->
-    <g transform="scale(0.35)">
-      <circle cx="100" cy="100" r="90" fill="#2B6CB0"/>
-      <circle cx="100" cy="100" r="85" fill="white"/>
-      <path d="M100 35 L106 90 L165 100 L106 110 L100 165 L94 110 L35 100 L94 90 Z" fill="#2B6CB0"/>
-      <circle cx="100" cy="100" r="30" fill="white"/>
-      <circle cx="100" cy="100" r="25" fill="#2B6CB0"/>
-      <circle cx="100" cy="100" r="20" fill="white"/>
-      <circle cx="100" cy="100" r="5" fill="#2B6CB0"/>
-      <text x="100" y="30" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">N</text>
-      <text x="175" y="105" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">E</text>
-      <text x="100" y="180" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">S</text>
-      <text x="25" y="105" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="#2B6CB0">W</text>
+    <g>
+      <circle cx="6.25" cy="6.25" r="5.625" fill="#2B6CB0"/>
+      <circle cx="6.25" cy="6.25" r="5.3125" fill="white"/>
+      <path d="M6.25 2.1875 L6.625 5.625 L10.3125 6.25 L6.625 6.875 L6.25 10.3125 L5.875 6.875 L2.1875 6.25 L5.875 5.625 Z" fill="#2B6CB0"/>
+      <circle cx="6.25" cy="6.25" r="1.875" fill="white"/>
+      <circle cx="6.25" cy="6.25" r="1.5625" fill="#2B6CB0"/>
+      <circle cx="6.25" cy="6.25" r="1.25" fill="white"/>
+      <circle cx="6.25" cy="6.25" r="0.3125" fill="#2B6CB0"/>
+      <text x="6.25" y="1.875" font-family="Arial" font-size="1" font-weight="bold" text-anchor="middle" fill="#2B6CB0">N</text>
+      <text x="10.9375" y="6.5625" font-family="Arial" font-size="1" font-weight="bold" text-anchor="middle" fill="#2B6CB0">E</text>
+      <text x="6.25" y="11.25" font-family="Arial" font-size="1" font-weight="bold" text-anchor="middle" fill="#2B6CB0">S</text>
+      <text x="1.5625" y="6.5625" font-family="Arial" font-size="1" font-weight="bold" text-anchor="middle" fill="#2B6CB0">W</text>
     </g>
     
     <!-- Company name only -->
-    <text x="80" y="45" font-family="Arial" font-size="24" font-weight="bold" fill="#2B6CB0">
+    <text x="14" y="8.5" font-family="Arial" font-size="6" font-weight="bold" fill="#2B6CB0">
       Job<tspan fill="#1A365D">Compass</tspan>
     </text>
 </svg>
