@@ -1,18 +1,57 @@
+'use client';
+
 import { Nav } from '@/components/custom-ui/nav';
 import { PiPhoneCall } from 'react-icons/pi';
 import { SelectLanguage } from '@/components/custom-ui/select-language';
 import { ButtonHome } from '@/components/custom-ui/button-home';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
 import { Search } from '@/components/custom-ui/search';
+import { SwitchSignIn } from '@/components/custom-ui/switch-sign-in';
+import { IoMdMenu } from 'react-icons/io';
+import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
+import { useState } from 'react';
+import { clsx } from 'clsx';
 
 export function HeaderSection() {
+    const [showMenuMobile, setShowMenuMobile] = useState(false);
+    const [showSearchMobile, setShowSearchMobile] = useState(false);
+
+    const handleToggleMenuMobile = () => {
+        setShowMenuMobile(!showMenuMobile);
+    };
+    const handleToggleSearchMobile = () => {
+        setShowSearchMobile(!showSearchMobile);
+    };
+
     return (
         <header>
-            <div className="bg-soft-mist">
-                <div className="mx-auto container max-w-screen-xl flex items-center justify-between">
+            <div className="px-3 py-2 lg:hidden flex items-center justify-between gap-2">
+                <div className="mr-auto">
+                    <ButtonHome />
+                </div>
+                <SwitchSignIn />
+                <span>
+                    <HiMiniMagnifyingGlass
+                        className={clsx('size-6', showSearchMobile ? 'text-primary' : 'text-black')}
+                        onClick={handleToggleSearchMobile}
+                    />
+                </span>
+                <span>
+                    <IoMdMenu
+                        className={clsx('size-6', showMenuMobile ? 'text-primary' : 'text-black')}
+                        onClick={handleToggleMenuMobile}
+                    />
+                </span>
+            </div>
+            {/*navigate bar*/}
+            <div
+                className={clsx(
+                    'px-3 bg-soft-mist overflow-hidden transition-all lg:h-fit',
+                    showMenuMobile ? 'h-72' : 'h-0'
+                )}
+            >
+                <div className="mx-auto container max-w-screen-xl flex flex-col lg:flex-row items-center justify-between">
                     <Nav />
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-x-6">
                         <div>
                             <div className="flex items-center gap-1 text-sm font-medium">
                                 <PiPhoneCall className="size-6" />
@@ -23,26 +62,28 @@ export function HeaderSection() {
                     </div>
                 </div>
             </div>
+            {/*     */}
+
+            {/*header search, login,...*/}
             <div className="bg-white">
                 <div className="mx-auto py-5 container max-w-screen-xl flex items-center">
-                    <ButtonHome />
-                    <div className="ml-8">
+                    <div className="hidden lg:block">
+                        <ButtonHome />
+                    </div>
+                    <div
+                        className={clsx(
+                            'w-full px-3 ml-0 lg:ml-8 lg:px-0 lg:mr-auto overflow-hidden lg:h-12 transition-all',
+                            showSearchMobile ? 'h-12' : 'h-0'
+                        )}
+                    >
                         <Search />
                     </div>
-                    <div className="ml-auto space-x-3">
-                        <Link href="/sign-in">
-                            <Button variant="outline-primary" size="xl">
-                                Sign in
-                            </Button>
-                        </Link>
-                        <Link href="/">
-                            <Button variant="default" size="xl">
-                                Post a Job
-                            </Button>
-                        </Link>
+                    <div className="hidden lg:block">
+                        <SwitchSignIn />
                     </div>
                 </div>
             </div>
+            {/*    */}
         </header>
     );
 }

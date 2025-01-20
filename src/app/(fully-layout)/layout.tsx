@@ -4,10 +4,10 @@ import React from 'react';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <React.Fragment>
+        <div className="flex flex-col min-h-dvh">
             <HeaderSection />
-            <main>{children}</main>
+            <main className="flex-1">{children}</main>
             <FooterSection />
-        </React.Fragment>
+        </div>
     );
 }

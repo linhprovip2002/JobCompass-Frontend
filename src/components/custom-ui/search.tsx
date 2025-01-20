@@ -14,14 +14,14 @@ export function Search() {
     const inputId = useId();
 
     return (
-        <div className="group h-12 w-[668px] flex items-center border border-input rounded-sm focus-within:border-primary-200">
+        <div className="h-12 w-full lg:max-w-[668px] lg:w-[668px] flex items-center border border-input rounded-sm focus-within:border-primary-200">
             <Select onValueChange={setSelect}>
-                <SelectTrigger className="max-w-44 h-full border-1 border-transparent shadow-none rounded-sm focus:ring-0 group-hover::border-primary-200">
+                <SelectTrigger className="max-w-44 h-full w-fit justify-start border-1 border-transparent shadow-none rounded-sm focus:ring-0">
                     <div className="flex items-center gap-2">
                         <Image
                             src={languages[select].imageUrl}
                             alt={languages[select].title}
-                            className="h-full w-full object-center object-cover"
+                            className="hidden lg:inline h-full w-full object-center object-cover"
                             height={16}
                             width={24}
                         />
@@ -45,7 +45,7 @@ export function Search() {
             </label>
             <Input
                 id={inputId}
-                className="h-full border-none shadow-none focus-visible:ring-0 text-base font-normal"
+                className="flex-1 h-full border-none shadow-none focus-visible:ring-0 text-base font-normal"
                 placeholder="Job title, keyword, company"
             />
         </div>
