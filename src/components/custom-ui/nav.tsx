@@ -44,7 +44,7 @@ export function Nav() {
                         pathname === page.href
                             ? 'text-primary font-medium lg:border-b-primary'
                             : 'text-soft-mist-foreground font-normal',
-                        'transition-all duration-200 py-2 lg:py-3 border-b-2 border-b-transparent text-sm hover:text-primary'
+                        'transition-all duration-200 py-2 lg:py-3 border-b-2 border-b-transparent text-base lg:text-sm hover:text-primary'
                     )}
                 >
                     {page.label}

@@ -20,6 +20,7 @@ export function SwitchSignIn() {
     return !isLogged ? (
         <div className="flex items-center justify-between lg:justify-normal gap-2 lg:gap-6">
             <div className="relative">
+                {/*notification*/}
                 <PiBellRinging className="size-6 "></PiBellRinging>
                 <Badge className={clsx(badgeVariants({ variant: 'notify' }), 'absolute top-0 right-0 size-2.5')} />
             </div>
