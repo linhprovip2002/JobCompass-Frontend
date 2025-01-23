@@ -1,4 +1,4 @@
-export const linkFooter = [
+export const linkFooterData = [
     {
         title: 'Quick links',
         links: [
