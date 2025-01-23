@@ -1,4 +1,4 @@
-import { linkFooter } from '@/lib/data/link-footer';
+import { linkFooterData } from '@/lib/data/link-footer.data';
 import Link from 'next/link';
 import { LuArrowRight } from 'react-icons/lu';
 import { FaFacebookF, FaYoutube, FaInstagram } from 'react-icons/fa';
@@ -20,7 +20,7 @@ export function FooterSection() {
                     <p>6391 Elgin St. Celina, Delaware 10299, New York, United States of America</p>
                 </div>
                 <div className="col-span-5 lg:col-span-3 flex items-start justify-between flex-wrap gap-y-5 [&_div]:basis-1/2 xl:[&_div]:basis-1/4">
-                    {linkFooter.map((section, index) => (
+                    {linkFooterData.map((section, index) => (
                         <div key={index}>
                             <p className="mb-4 text-xl text-white font-medium">{section.title}</p>
                             {section.links.map((link, index) => (

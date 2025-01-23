@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 import Image from 'next/image';
-import { languages } from '@/lib/data/languages';
+import { languagesData } from '@/lib/data/languages.data';
 
 export function Search() {
     const [select, setSelect] = useState<string>('en');
@@ -19,17 +19,17 @@ export function Search() {
                 <SelectTrigger className="max-w-44 h-full w-fit justify-start border-1 border-transparent shadow-none rounded-sm focus:ring-0">
                     <div className="flex items-center gap-2">
                         <Image
-                            src={languages[select].imageUrl}
-                            alt={languages[select].title}
+                            src={languagesData[select].imageUrl}
+                            alt={languagesData[select].title}
                             className="hidden lg:inline h-full w-full object-center object-cover"
                             height={16}
                             width={24}
                         />
-                        <span className="text-soft-mist-foreground">{languages[select].title}</span>
+                        <span className="text-soft-mist-foreground">{languagesData[select].title}</span>
                     </div>
                 </SelectTrigger>
                 <SelectContent defaultValue={select}>
-                    {Object.entries(languages).map((language) => (
+                    {Object.entries(languagesData).map((language) => (
                         <SelectItem key={language[0]} value={language[0]} className="flex items-center">
                             <div className="flex items-center gap-2">
                                 <Image src={language[1].imageUrl} alt={language[1].title} height={16} width={24} />
