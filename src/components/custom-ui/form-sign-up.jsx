@@ -1,16 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { roles } from '../../lib/data/roles.data';
-import { Input } from '../ui/input';
-import { InputPassword } from './input-password';
-import { Checkbox } from '../ui/checkbox';
-import { Button } from '../ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { roles } from '@/lib/data/roles.data';
+import { Input } from '@/components/ui/input';
+import { Checkbox } from '@/components/ui/checkbox';
 import { LuArrowRight } from 'react-icons/lu';
-import { ButtonOptionsSignIn } from './button-options-sign-in';
 import React, { useActionState, useId, useState } from 'react';
 import { signUpSubmit } from '@/lib/action';
+import { Button } from '@/components/ui/button';
+import { InputPassword } from '@/components/custom-ui/input-password';
+import { ButtonOptionsSignIn } from '@/components/custom-ui/button-options-sign-in';
 
 export function FormSignUp() {
     const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +28,7 @@ export function FormSignUp() {
     });
 
     return (
-        <form className="sign-up-form flex flex-col space-y-8" action={onSubmit}>
+        <form className="sign-up-form flex flex-col space-y-8" action={onSubmit} autoComplete="sign-up">
             <div className="flex items-center justify-between">
                 <div>
                     <h5 className="mb-4 text-[32px] leading-10 font-medium">Create account</h5>
@@ -37,7 +37,7 @@ export function FormSignUp() {
                         Log in
                     </Link>
                 </div>
-                <Select name="roleId">
+                <Select name="roleId" defaultValue={state.roleId}>
                     <SelectTrigger className="h-12 rounded-sm focus-visible:border-primary focus-visible:ring-primary text-base max-w-36">
                         <SelectValue placeholder="Select a role" />
                     </SelectTrigger>
@@ -53,12 +53,14 @@ export function FormSignUp() {
             <div className="space-y-5">
                 <div className="flex items-center gap-5">
                     <Input
+                        defaultValue={state.fullName}
                         name="fullName"
                         placeholder="Full name"
                         type="text"
                         className="h-12 rounded-sm focus-visible:border-primary focus-visible:ring-primary"
                     />
                     <Input
+                        defaultValue={state.username}
                         name="username"
                         placeholder="Username"
                         type="text"
@@ -66,12 +68,14 @@ export function FormSignUp() {
                     />
                 </div>
                 <Input
+                    defaultValue={state.email}
                     name="email"
                     placeholder="Email address"
                     type="text"
                     className="h-12 rounded-sm focus-visible:border-primary focus-visible:ring-primary"
                 />
                 <InputPassword
+                    defaultValue={state.password}
                     name="password"
                     placeholder="Password"
                     type="text"
@@ -80,6 +84,7 @@ export function FormSignUp() {
                     className="h-12 rounded-sm border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary focus-visible:ring-primary"
                 />
                 <InputPassword
+                    defaultValue={state.confirmPassword}
                     name="confirmPassword"
                     placeholder="Confirm password"
                     type="text"
@@ -100,7 +105,11 @@ export function FormSignUp() {
                     Terms of Services
                 </Link>
             </div>
-            <Button type="submit" className="group h-14 rounded-sm text-base [&_svg]:size-6 font-semibold" isPending={isPending}>
+            <Button
+                type="submit"
+                className="group h-14 rounded-sm text-base [&_svg]:size-6 font-semibold"
+                isPending={isPending}
+            >
                 Create account <LuArrowRight className="group-hover:translate-x-2 transition-all" />
             </Button>
             <div className="space-y-4">

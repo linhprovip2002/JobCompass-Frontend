@@ -1,4 +1,4 @@
-import { SignInCredentials, SignUpCredentials } from 'form-credentials';
+import { ResetPasswordCredentials, SignInCredentials, SignUpCredentials } from 'form-credentials';
 
 export const signInSubmit = (currentState: SignInCredentials, formData: FormData) => {
     // conduct validate & submit...
@@ -30,6 +30,17 @@ export const signUpSubmit = (currentState: SignUpCredentials, formData: FormData
         password,
         confirmPassword,
     });
+
+    //     handle call api
+    //     ...
+
+    return currentState;
+};
+
+export const resetPasswordSubmit = (currentState: ResetPasswordCredentials, formData: FormData) => {
+    const email = formData.get('email');
+
+    console.log({ email });
 
     //     handle call api
     //     ...
