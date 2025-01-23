@@ -53,7 +53,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="col-span-1 px-10 pb-10 py-4 lg:px-20">
                     <div className="h-full flex flex-col">
                         <ButtonHome />
-                        <div className="flex-1">{children}</div>
+                        <div className="flex-1 h-full flex flex-col justify-center">{children}</div>
                     </div>
                 </div>
             </div>

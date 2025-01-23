@@ -12,4 +12,8 @@ declare module 'form-credentials' {
         password: string;
         confirmPassword: string;
     }
+
+    interface ResetPasswordCredentials {
+        email: string;
+    }
 }

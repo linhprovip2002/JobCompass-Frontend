@@ -21,7 +21,7 @@ export function FormSignIn() {
     const checkboxId = useId();
 
     return (
-        <form className="sign-in-form flex flex-col space-y-8" action={onSubmit}>
+        <form className="sign-in-form flex flex-col space-y-8" action={onSubmit} autoComplete="sign-in">
             <div className="space-y-5">
                 <Input
                     defaultValue={state.email}
@@ -46,7 +46,7 @@ export function FormSignIn() {
                             Remember me
                         </label>
                     </div>
-                    <Link href="/forgot-password" className="text-primary text-sm hover:underline font-medium">
+                    <Link href="/forget-password" className="text-primary text-sm hover:underline font-medium">
                         Forget password
                     </Link>
                 </div>
