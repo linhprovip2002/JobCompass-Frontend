@@ -66,13 +66,13 @@ export function SwitchSignIn() {
         </div>
     ) : (
         <div className="w-full flex items-center justify-end gap-2 lg:gap-3">
-            <Link href="/sign-in" >
-                <Button variant="outline-primary" size="xl-responsive" >
+            <Link href="/sign-in">
+                <Button variant="outline-primary" size="xl-responsive">
                     Sign in
                 </Button>
             </Link>
-            <Link href="/" >
-                <Button variant="default" size="xl-responsive" >
+            <Link href="/">
+                <Button variant="default" size="xl-responsive">
                     Post a Job
                 </Button>
             </Link>
