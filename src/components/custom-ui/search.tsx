@@ -25,7 +25,7 @@ export function Search() {
                             height={16}
                             width={24}
                         />
-                        <span className="text-soft-mist-foreground">{languagesData[select].title}</span>
+                        <span className="text-soft-mist-foreground text-base">{languagesData[select].title}</span>
                     </div>
                 </SelectTrigger>
                 <SelectContent defaultValue={select}>

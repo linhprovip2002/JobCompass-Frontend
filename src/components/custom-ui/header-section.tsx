@@ -10,6 +10,7 @@ import { IoMdMenu } from 'react-icons/io';
 import { HiMiniMagnifyingGlass } from 'react-icons/hi2';
 import { useState } from 'react';
 import { clsx } from 'clsx';
+import { Button } from '@/components/ui/button';
 
 export function HeaderSection() {
     const [showMenuMobile, setShowMenuMobile] = useState(false);
@@ -24,24 +25,20 @@ export function HeaderSection() {
 
     return (
         <header>
+            {/*for mobile*/}
             <div className="px-3 py-2 lg:hidden flex items-center justify-between gap-2">
                 <div className="mr-auto">
                     <ButtonHome />
                 </div>
                 <SwitchSignIn />
-                <span>
-                    <HiMiniMagnifyingGlass
-                        className={clsx('size-6', showSearchMobile ? 'text-primary' : 'text-black')}
-                        onClick={handleToggleSearchMobile}
-                    />
-                </span>
-                <span>
-                    <IoMdMenu
-                        className={clsx('size-6', showMenuMobile ? 'text-primary' : 'text-black')}
-                        onClick={handleToggleMenuMobile}
-                    />
-                </span>
+                <Button size="lg" variant="ghost" className='[&_svg]:size-6 px-2' onClick={handleToggleSearchMobile}>
+                    <HiMiniMagnifyingGlass className={showSearchMobile ? 'text-primary' : 'text-black'} />
+                </Button>
+                <Button size="lg" variant="ghost" className='[&_svg]:size-6 px-2' onClick={handleToggleMenuMobile}>
+                    <IoMdMenu className={showMenuMobile ? 'text-primary' : 'text-black'} />
+                </Button>
             </div>
+            {/*---*/}
             {/*navigate bar*/}
             <div
                 className={clsx(
@@ -64,15 +61,15 @@ export function HeaderSection() {
             </div>
             {/*     */}
 
-            {/*header search, login,...*/}
-            <div className="bg-white">
-                <div className="mx-auto py-5 container max-w-screen-xl flex items-center">
+            {/*for desktop: header search, login,...*/}
+            <div className="bg-white px-3 py-5">
+                <div className="mx-auto py-5` container max-w-screen-xl flex items-center">
                     <div className="hidden lg:block">
                         <ButtonHome />
                     </div>
                     <div
                         className={clsx(
-                            'w-full px-3 ml-0 lg:ml-8 lg:px-0 lg:mr-auto overflow-hidden lg:h-12 transition-all',
+                            'w-full ml-0 lg:ml-8  lg:mr-auto overflow-hidden lg:h-12 transition-all',
                             showSearchMobile ? 'h-12' : 'h-0'
                         )}
                     >

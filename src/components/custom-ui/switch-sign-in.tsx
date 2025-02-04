@@ -15,7 +15,7 @@ import {
 import { PiUserCircle, PiTimer, PiUsers, PiSignOutFill, PiBuilding } from 'react-icons/pi';
 
 export function SwitchSignIn() {
-    const isLogged = false;
+    const isLogged = true;
 
     return !isLogged ? (
         <div className="flex items-center justify-between lg:justify-normal gap-2 lg:gap-6">
@@ -65,14 +65,14 @@ export function SwitchSignIn() {
             </DropdownMenu>
         </div>
     ) : (
-        <div className="w-full flex items-center gap-2 lg:gap-3">
-            <Link href="/sign-in" className="w-full">
-                <Button variant="outline-primary" size="xl-responsive" className="w-full">
+        <div className="w-full flex items-center justify-end gap-2 lg:gap-3">
+            <Link href="/sign-in" >
+                <Button variant="outline-primary" size="xl-responsive" >
                     Sign in
                 </Button>
             </Link>
-            <Link href="/" className="w-full">
-                <Button variant="default" size="xl-responsive" className="w-full">
+            <Link href="/" >
+                <Button variant="default" size="xl-responsive" >
                     Post a Job
                 </Button>
             </Link>
