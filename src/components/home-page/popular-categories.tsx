@@ -1,14 +1,26 @@
 'use client';
+
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-import { PopularCategoryProps, Category } from '@/types/categories-home-page.types';
+import { ArrowRight, Building2 } from 'lucide-react';
+import {  Category } from '@/types/categories-home-page.types';
 import { HomePart } from './home-part';
 import { motionVariant } from '@/lib/motion-variants';
 import { IconPresent } from '../custom-ui/icon-present';
 
-export function PopularCategory({ categories }: PopularCategoryProps) {
+const categories: Category[] = [
+    { name: 'Design & Creative', jobs: 235, icon: Building2 },
+    { name: 'Development', jobs: 427, icon: Building2 },
+    { name: 'Marketing', jobs: 264, icon: Building2 },
+    { name: 'Finance', jobs: 154, icon: Building2 },
+    { name: 'Design & Creative', jobs: 235, icon: Building2 },
+    { name: 'Development', jobs: 427, icon: Building2 },
+    { name: 'Marketing', jobs: 264, icon: Building2 },
+    { name: 'Finance', jobs: 154, icon: Building2 },
+];
+
+
+export function PopularCategory() {
     return (
         <HomePart
             title="Popular category"

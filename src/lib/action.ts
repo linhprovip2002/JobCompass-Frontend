@@ -1,4 +1,4 @@
-import {  ForgetPasswordCredentials, SignInCredentials, SignUpCredentials } from 'form-credentials';
+import { ForgetPasswordCredentials, SignInCredentials, SignUpCredentials } from 'form-credentials';
 
 export const signInSubmit = (currentState: SignInCredentials, formData: FormData) => {
     // conduct validate & submit...

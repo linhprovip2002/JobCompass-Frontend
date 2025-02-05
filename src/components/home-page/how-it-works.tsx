@@ -1,3 +1,5 @@
+'use client'
+
 import { CircleUser, Upload, Search, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { HomePart } from './home-part';

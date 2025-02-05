@@ -1,12 +1,7 @@
-'use client';
-
-import _ from 'lodash';
-import { Building2 } from 'lucide-react';
 import { PopularVacancies } from '@/components/home-page/popular-vacancies';
 import { HowItWorks } from '@/components/home-page/how-it-works';
 import { TopCompanies } from '@/components/home-page/top-companies';
 import { PopularCategory } from '@/components/home-page/popular-categories';
-import { Category } from '@/types/categories-home-page.types';
 import { HeroSection } from '@/components/home-page/hero-section';
 import { FeatureJobs } from '@/components/home-page/feature-jobs';
 import { Testimonials } from '@/components/home-page/testimonials';
@@ -32,7 +27,7 @@ export default function Home() {
 
             {/* Popular Categories */}
             <div className="py-16 md:py-24">
-                <PopularCategory categories={categories} />
+                <PopularCategory/>
             </div>
 
             {/* Featured Jobs */}
@@ -55,13 +50,3 @@ export default function Home() {
     );
 }
 
-const categories: Category[] = [
-    { name: 'Design & Creative', jobs: 235, icon: Building2 },
-    { name: 'Development', jobs: 427, icon: Building2 },
-    { name: 'Marketing', jobs: 264, icon: Building2 },
-    { name: 'Finance', jobs: 154, icon: Building2 },
-    { name: 'Design & Creative', jobs: 235, icon: Building2 },
-    { name: 'Development', jobs: 427, icon: Building2 },
-    { name: 'Marketing', jobs: 264, icon: Building2 },
-    { name: 'Finance', jobs: 154, icon: Building2 },
-];

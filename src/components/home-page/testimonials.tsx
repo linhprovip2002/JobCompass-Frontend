@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image';
 import { Card } from '@/components/ui/card';
 import _ from 'lodash';
@@ -5,6 +7,7 @@ import { motion } from 'framer-motion';
 import default_avatar from '@/assets/images/avatar/default-avatar.jpg';
 import { HomePart } from './home-part';
 import { motionVariant } from '@/lib/motion-variants';
+import { Rating } from '../custom-ui/rating';
 
 type Testimonial = {
     text: string;
@@ -45,13 +48,13 @@ export function Testimonials() {
                 viewport={{ once: true }}
             >
                 {testimonials.map((testimonial, index) => (
-                    <Card key={index} className="p-6">
-                        <div className="flex gap-1 mb-4">
-                            {/* {_.times(5, (i: Testimonial[]) => (
-                                            <Star key={i.toString()} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                                        ))} */}
+                    <Card key={index} className="p-6 flex flex-col justify-between border-gray-100 shadow-sm drop-shadow-sm">
+                        <div>
+                            <div className="flex gap-1 mb-4">
+                                <Rating size='xs' interactive={false} value={5}  />
+                            </div>
+                            <p className="text-muted-foreground mb-4">{testimonial.text}</p>
                         </div>
-                        <p className="text-muted-foreground mb-4">{testimonial.text}</p>
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center overflow-hidden">
                                 {testimonial.avatarUrl?.trim() ? (
@@ -73,7 +76,7 @@ export function Testimonials() {
                                 )}
                             </div>
                             <div>
-                                <p className="font-semibold">{testimonial.name}</p>
+                                <p className="font-medium">{testimonial.name}</p>
                                 <p className="text-sm text-muted-foreground">{testimonial.role}</p>
                             </div>
                         </div>
