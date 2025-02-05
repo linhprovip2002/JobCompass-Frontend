@@ -1,55 +1,85 @@
-import { Star } from 'lucide-react';
+import Image from 'next/image';
+import { Card } from '@/components/ui/card';
+import _ from 'lodash';
+import { motion } from 'framer-motion';
+import default_avatar from '@/assets/images/avatar/default-avatar.jpg';
+import { HomePart } from './home-part';
+import { motionVariant } from '@/lib/motion-variants';
 
-export default function Testimonials() {
-    const testimonials = [
-        {
-            content: 'Great platform for job seekers. Found my dream job within weeks!',
-            author: 'Sarah Parker',
-            role: 'UI Designer',
-        },
-        {
-            content: "The best job board I've used. Very user friendly and effective.",
-            author: 'John Cooper',
-            role: 'Software Engineer',
-        },
-        {
-            content: 'Excellent service and support. Highly recommended for job seekers!',
-            author: 'Mike Thompson',
-            role: 'Product Manager',
-        },
-    ];
+type Testimonial = {
+    text: string;
+    name: string;
+    role: string;
+    avatarUrl?: string;
+};
 
+const testimonials: Testimonial[] = [
+    {
+        text: 'Found my dream job through this platform. The process was smooth and the support team was very helpful.',
+        name: 'Sarah Johnson',
+        role: 'UI Designer',
+        avatarUrl: '',
+    },
+    {
+        text: 'As an employer, I was able to find qualified candidates quickly. The platform is intuitive and powerful.',
+        name: 'Michael Chen',
+        role: 'HR Manager',
+        avatarUrl: '',
+    },
+    {
+        text: 'Great platform for job seekers. Lots of opportunities and easy to use interface.',
+        name: 'Emily Brown',
+        role: 'Software Engineer',
+        avatarUrl: '',
+    },
+];
+
+export function Testimonials() {
     return (
-        <section className="bg-muted py-12">
-            <div className="container mx-auto px-4">
-                <h2 className="mb-8 text-center text-2xl font-bold">Clients Testimonial</h2>
-                <div className="relative">
-                    <div className="flex gap-6 overflow-hidden">
-                        {testimonials.map((testimonial, index) => (
-                            <div
-                                key={index}
-                                className="min-w-full rounded-lg bg-background p-6 md:min-w-[calc(33.333%-1rem)]"
-                            >
-                                <div className="mb-4 flex text-yellow-400">
-                                    {Array(5)
-                                        .fill(null)
-                                        .map((_, i) => (
-                                            <Star key={i} className="h-4 w-4 fill-current" />
-                                        ))}
-                                </div>
-                                <p className="mb-4 text-muted-foreground">{testimonial.content}</p>
-                                <div className="flex items-center gap-4">
-                                    <div className="h-12 w-12 rounded-full bg-muted" />
-                                    <div>
-                                        <div className="font-semibold">{testimonial.author}</div>
-                                        <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                                    </div>
-                                </div>
+        <HomePart title="Clients Testimonial">
+            <motion.div
+                className="grid md:grid-cols-3 gap-8"
+                variants={motionVariant.itemVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+            >
+                {testimonials.map((testimonial, index) => (
+                    <Card key={index} className="p-6">
+                        <div className="flex gap-1 mb-4">
+                            {/* {_.times(5, (i: Testimonial[]) => (
+                                            <Star key={i.toString()} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                                        ))} */}
+                        </div>
+                        <p className="text-muted-foreground mb-4">{testimonial.text}</p>
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center overflow-hidden">
+                                {testimonial.avatarUrl?.trim() ? (
+                                    <Image
+                                        src={testimonial.avatarUrl}
+                                        alt={`${testimonial.name}'s Avatar`}
+                                        width={40} // Đặt kích thước cố định để tránh layout shift
+                                        height={40}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <Image
+                                        src={default_avatar}
+                                        alt="Default Avatar"
+                                        width={40}
+                                        height={40}
+                                        className="w-full h-full object-cover"
+                                    />
+                                )}
                             </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
+                            <div>
+                                <p className="font-semibold">{testimonial.name}</p>
+                                <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                            </div>
+                        </div>
+                    </Card>
+                ))}
+            </motion.div>
+        </HomePart>
     );
 }

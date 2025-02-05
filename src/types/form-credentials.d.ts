@@ -13,7 +13,7 @@ declare module 'form-credentials' {
         confirmPassword: string;
     }
 
-    interface ResetPasswordCredentials {
+    interface ForgetPasswordCredentials {
         email: string;
     }
 }

@@ -56,7 +56,7 @@ export function FormSignIn() {
                 className="group h-14 rounded-sm text-base [&_svg]:size-6 font-semibold"
                 isPending={isPending}
             >
-                Sign in <LuArrowRight className="group-hover:translate-x-2 transition-all" />
+                Sign in <LuArrowRight className="group-hover:translate-x-2 transition-all duration-100" />
             </Button>
             <div className="space-y-4">
                 <p className="text-center text-sm text-gray-500">or</p>

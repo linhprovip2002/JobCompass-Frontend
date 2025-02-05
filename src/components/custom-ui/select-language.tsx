@@ -18,7 +18,7 @@ export function SelectLanguage() {
                         height={16}
                         width={24}
                     />
-                    <span className="text-soft-mist-foreground">{languagesData[select].title}</span>
+                    <span className="text-gray-700">{languagesData[select].title}</span>
                 </div>
             </SelectTrigger>
             <SelectContent defaultValue={select} side="bottom" align="end">
@@ -26,7 +26,7 @@ export function SelectLanguage() {
                     <SelectItem key={language[0]} value={language[0]} className="flex items-center">
                         <div className="flex items-center gap-2">
                             <Image src={language[1].imageUrl} alt={language[1].title} height={16} width={24} />
-                            <span className="text-soft-mist-foreground">{language[1].title}</span>
+                            <span className="text-gray-700">{language[1].title}</span>
                         </div>
                     </SelectItem>
                 ))}

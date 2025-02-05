@@ -1,4 +1,4 @@
-import { ResetPasswordCredentials, SignInCredentials, SignUpCredentials } from 'form-credentials';
+import {  ForgetPasswordCredentials, SignInCredentials, SignUpCredentials } from 'form-credentials';
 
 export const signInSubmit = (currentState: SignInCredentials, formData: FormData) => {
     // conduct validate & submit...
@@ -37,7 +37,7 @@ export const signUpSubmit = (currentState: SignUpCredentials, formData: FormData
     return currentState;
 };
 
-export const resetPasswordSubmit = (currentState: ResetPasswordCredentials, formData: FormData) => {
+export const forgetPasswordSubmit = (currentState: ForgetPasswordCredentials, formData: FormData) => {
     const email = formData.get('email');
 
     console.log({ email });

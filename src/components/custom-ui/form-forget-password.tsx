@@ -2,13 +2,13 @@
 
 import { LuArrowRight } from 'react-icons/lu';
 import React, { useActionState } from 'react';
-import { resetPasswordSubmit } from '@/lib/action';
+import { forgetPasswordSubmit } from '@/lib/action';
 import { ButtonOptionsSignIn } from '@/components/custom-ui/button-options-sign-in';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-export function FormResetPassword() {
-    const [state, onSubmit, isPending] = useActionState(resetPasswordSubmit, { email: '' });
+export function FormForgetPassword() {
+    const [state, onSubmit, isPending] = useActionState(forgetPasswordSubmit, { email: '' });
 
     return (
         <form className="sign-up-form flex flex-col gap-y-8" action={onSubmit} autoComplete="forget-password">

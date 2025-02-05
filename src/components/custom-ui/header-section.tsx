@@ -42,7 +42,7 @@ export function HeaderSection() {
             {/*navigate bar*/}
             <div
                 className={clsx(
-                    'px-3 bg-soft-mist overflow-hidden transition-all lg:h-fit',
+                    'px-3 bg-gray-50 overflow-hidden transition-all lg:h-fit',
                     showMenuMobile ? 'h-72' : 'h-0'
                 )}
             >
@@ -55,7 +55,6 @@ export function HeaderSection() {
                                 <span className="text-nowrap">+1-202-555-0178</span>
                             </div>
                         </div>
-                        <SelectLanguage />
                     </div>
                 </div>
             </div>

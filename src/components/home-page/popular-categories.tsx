@@ -4,58 +4,46 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { PopularCategoryProps, Category } from '@/types/categories-home-page.types';
+import { HomePart } from './home-part';
+import { motionVariant } from '@/lib/motion-variants';
+import { IconPresent } from '../custom-ui/icon-present';
 
-export default function PopularCategory({ categories }: PopularCategoryProps) {
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: { type: 'spring', stiffness: 100 },
-        },
-    };
-
+export function PopularCategory({ categories }: PopularCategoryProps) {
     return (
-        <section className="py-16">
-            <div className="container max-w-screen-xl mx-auto px-4">
-                <div className="flex justify-between items-center mb-8">
-                    <h2 className="text-2xl font-bold">Popular category</h2>
-                    <Link href="#" className="text-primary flex items-center gap-2">
-                        View all <ArrowRight className="h-4 w-4" />
-                    </Link>
-                </div>
-                <motion.div
-                    className="grid grid-cols-2 md:grid-cols-4 gap-4"
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                >
-                    {categories.map((category: Category, index) => (
-                        <motion.div key={index} variants={itemVariants}>
-                            <Card className="p-4 hover:shadow-lg transition-shadow">
-                                <div className="flex items-center gap-3">
-                                    {category.icon}
-                                    <div>
-                                        <h3 className="font-semibold">{category.name}</h3>
-                                        <p className="text-sm text-muted-foreground">{category.jobs} Open positions</p>
+        <HomePart
+            title="Popular category"
+            linkNode={
+                <Link href="#" className="text-primary flex items-center gap-2">
+                    View all <ArrowRight className="h-4 w-4" />
+                </Link>
+            }
+        >
+            <motion.div
+                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+                variants={motionVariant.containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+            >
+                {categories.map((category: Category, index) => {
+                    const Icon = category.icon;
+                    return (
+                        <motion.div key={index} variants={motionVariant.itemVariants}>
+                            <IconPresent.Group className="p-6 hover:bg-white rounded-md hover:shadow-primary-50 hover:shadow-lg">
+                                <Link href="/">
+                                    <div className="flex items-center gap-3">
+                                        <IconPresent.Icon Icon={Icon} size="md" />
+                                        <div>
+                                            <h3 className="font-medium text-lg line-clamp-1">{category.name}</h3>
+                                            <p className="text-sm text-gray-600">{category.jobs} Open positions</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </Card>
+                                </Link>
+                            </IconPresent.Group>
                         </motion.div>
-                    ))}
-                </motion.div>
-            </div>
-        </section>
+                    );
+                })}
+            </motion.div>
+        </HomePart>
     );
 }

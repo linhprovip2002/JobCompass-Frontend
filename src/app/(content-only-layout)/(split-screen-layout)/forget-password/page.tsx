@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { FormResetPassword } from '@/components/custom-ui/form-reset-password';
+import { FormForgetPassword } from '@/components/custom-ui/form-forget-password';
 
 export default function Page() {
     return (
@@ -22,7 +22,7 @@ export default function Page() {
                     </div>
                 </div>
             </div>
-            <FormResetPassword />
+            <FormForgetPassword />
         </div>
     );
 }

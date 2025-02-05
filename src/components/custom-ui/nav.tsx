@@ -43,7 +43,7 @@ export function Nav() {
                     className={clsx(
                         pathname === page.href
                             ? 'text-primary font-medium lg:border-b-primary'
-                            : 'text-soft-mist-foreground font-normal',
+                            : 'text-gray-600 font-normal',
                         'transition-all duration-200 py-2 lg:py-3 border-b-2 border-b-transparent text-base lg:text-sm hover:text-primary'
                     )}
                 >
