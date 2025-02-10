@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Building2 } from 'lucide-react';
-import {  Category } from '@/types/categories-home-page.types';
+import { Category } from '@/types/categories-home-page.types';
 import { HomePart } from './home-part';
 import { motionVariant } from '@/lib/motion-variants';
 import { IconPresent } from '../custom-ui/icon-present';
@@ -18,7 +18,6 @@ const categories: Category[] = [
     { name: 'Marketing', jobs: 264, icon: Building2 },
     { name: 'Finance', jobs: 154, icon: Building2 },
 ];
-
 
 export function PopularCategory() {
     return (

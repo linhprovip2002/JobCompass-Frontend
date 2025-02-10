@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { CircleUser, Upload, Search, Send } from 'lucide-react';
 import { motion } from 'framer-motion';

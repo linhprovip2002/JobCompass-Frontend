@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import clsx from 'clsx';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
@@ -8,14 +8,14 @@ type Props = {
     stars?: number;
     value?: number;
     setValue?: Dispatch<SetStateAction<Number>>;
-    size?: 'xs'|'sm' | 'md' | 'lg';
+    size?: 'xs' | 'sm' | 'md' | 'lg';
     className?: string;
-    interactive?: boolean
+    interactive?: boolean;
 };
 
-const defaultFunction = () => {}
+const defaultFunction = () => {};
 
-export const Rating = ({ stars = 5, value = 3, setValue, size = 'md', className, interactive=true }: Props) => {
+export const Rating = ({ stars = 5, value = 3, setValue, size = 'md', className, interactive = true }: Props) => {
     const [current, setCurrent] = useState(value);
 
     useEffect(() => {
@@ -38,27 +38,28 @@ export const Rating = ({ stars = 5, value = 3, setValue, size = 'md', className,
                     <button
                         key={index}
                         type="button"
-                        onClick={interactive ? handleChange:defaultFunction}
-                        onMouseEnter={interactive ? () => handleMouseEnter(index + 1):defaultFunction}
-                        onMouseLeave={interactive ? handleMouseLeave :defaultFunction}
+                        onClick={interactive ? handleChange : defaultFunction}
+                        onMouseEnter={interactive ? () => handleMouseEnter(index + 1) : defaultFunction}
+                        onMouseLeave={interactive ? handleMouseLeave : defaultFunction}
                     >
                         <GoStarFill
                             className={clsx(
                                 'transition-all',
                                 interactive ? 'hover:scale-125 cursor-pointer' : 'cursor-default',
                                 index + 1 <= current ? `text-warning-500` : 'text-gray-400',
-                                 size === 'xs'? 'size-5':
-                                size === 'sm'
-                                    ? 'size-8'
-                                    : size === 'md'
-                                      ? 'size-10'
-                                      : size === 'lg'
-                                        ? 'size-12'
-                                        : size === 'xs'
-                                          ? 'size-8'
-                                          : size === 'tiny'
-                                            ? 'size-5'
-                                            : ''
+                                size === 'xs'
+                                    ? 'size-5'
+                                    : size === 'sm'
+                                      ? 'size-8'
+                                      : size === 'md'
+                                        ? 'size-10'
+                                        : size === 'lg'
+                                          ? 'size-12'
+                                          : size === 'xs'
+                                            ? 'size-8'
+                                            : size === 'tiny'
+                                              ? 'size-5'
+                                              : ''
                             )}
                         />
                     </button>
