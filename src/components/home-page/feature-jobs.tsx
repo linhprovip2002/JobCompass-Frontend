@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { LuArrowRight } from 'react-icons/lu';
 import { motion } from 'framer-motion';
 import { motionVariant } from '@/lib/motion-variants';
+import { ButtonMark } from '../custom-ui/button-mark';
 
 const jobs = [
     {
@@ -93,9 +94,7 @@ export function FeatureJobs() {
                             </div>
                         </div>
                         <div className="flex-1 flex items-center justify-end gap-3">
-                            <Button className="[&_svg]:size-6 p-3" size="xl" variant="third">
-                                <Bookmark />
-                            </Button>
+                            <ButtonMark />
                             <Button className="group" variant="secondary" size="xl">
                                 Apply Now <LuArrowRight className="group-hover:translate-x-2 transition-all" />
                             </Button>
