@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import Image from 'next/image';
 import { Card } from '@/components/ui/card';
@@ -48,10 +48,13 @@ export function Testimonials() {
                 viewport={{ once: true }}
             >
                 {testimonials.map((testimonial, index) => (
-                    <Card key={index} className="p-6 flex flex-col justify-between border-gray-100 shadow-sm drop-shadow-sm">
+                    <Card
+                        key={index}
+                        className="p-6 flex flex-col justify-between border-gray-100 shadow-sm drop-shadow-sm"
+                    >
                         <div>
                             <div className="flex gap-1 mb-4">
-                                <Rating size='xs' interactive={false} value={5}  />
+                                <Rating size="xs" interactive={false} value={5} />
                             </div>
                             <p className="text-muted-foreground mb-4">{testimonial.text}</p>
                         </div>

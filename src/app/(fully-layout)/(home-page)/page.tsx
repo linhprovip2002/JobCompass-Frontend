@@ -27,7 +27,7 @@ export default function Home() {
 
             {/* Popular Categories */}
             <div className="py-16 md:py-24">
-                <PopularCategory/>
+                <PopularCategory />
             </div>
 
             {/* Featured Jobs */}
@@ -49,4 +49,3 @@ export default function Home() {
         </main>
     );
 }
-

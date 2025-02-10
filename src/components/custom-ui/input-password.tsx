@@ -11,8 +11,8 @@ interface InputPasswordProps {
 
 export const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps & React.ComponentProps<'input'>>(
     ({ className, hide, setHide, ...props }, ref) => {
-        const handleTogglePasswordVisibility = () => {
-            setHide(!hide);
+        const handleTogglePasswordVisibility = (status: boolean) => {
+            setHide(status);
         };
 
         return (
@@ -32,14 +32,14 @@ export const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordPro
                 />
                 <BsEye
                     className={clsx('absolute top-1/2 right-[18px] -translate-y-1/2 size-[22px]', hide ? 'hidden' : '')}
-                    onClick={handleTogglePasswordVisibility}
+                    onClick={() => handleTogglePasswordVisibility(false)}
                 />
                 <BsEyeSlash
                     className={clsx(
                         'absolute top-1/2 right-[18px] -translate-y-1/2 size-[22px]',
                         !hide ? 'hidden' : ''
                     )}
-                    onClick={handleTogglePasswordVisibility}
+                    onClick={() => handleTogglePasswordVisibility(true)}
                 />
             </div>
         );
