@@ -1,15 +1,12 @@
 import { ForgetPasswordCredentials, SignInCredentials, SignUpCredentials } from 'form-credentials';
+import { storeTokenInfo } from './axios';
+import { ApiResponse, DetailedResponse } from 'api-types';
 
-export const signInSubmit = (currentState: SignInCredentials, formData: FormData) => {
+export const signInSubmit = async (currentState: SignInCredentials, formData: FormData) => {
     // conduct validate & submit...
 
     const email = formData.get('email')?.toString() ?? '';
     const password = formData.get('password')?.toString() ?? '';
-
-    console.log({
-        email,
-        password,
-    });
 
     return currentState;
 };
