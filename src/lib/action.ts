@@ -1,6 +1,6 @@
 import { ForgetPasswordCredentials, SignInCredentials, SignUpCredentials } from 'form-credentials';
-import { storeTokenInfo } from './axios';
 import { ApiResponse, DetailedResponse } from 'api-types';
+import { BaseAxios } from './axios';
 
 export const signInSubmit = async (currentState: SignInCredentials, formData: FormData) => {
     // conduct validate & submit...
@@ -8,10 +8,16 @@ export const signInSubmit = async (currentState: SignInCredentials, formData: Fo
     const email = formData.get('email')?.toString() ?? '';
     const password = formData.get('password')?.toString() ?? '';
 
+    const axios = new BaseAxios('auth')
+
+    const res = await axios.post<ApiResponse<DetailedResponse.SignIn>>('/login', {username: email, password})
+    if (res.payload.value)
+        axios.storeTokenInfo(res.payload.value?.accessToken, res.payload.value?.tokenType, res.payload.value?.accessTokenExpires)
+
     return currentState;
 };
 
-export const signUpSubmit = (currentState: SignUpCredentials, formData: FormData) => {
+export const signUpSubmit = async (currentState: SignUpCredentials, formData: FormData) => {
     const roleId = formData.get('roleId');
     const fullName = formData.get('fullName');
     const username = formData.get('username');

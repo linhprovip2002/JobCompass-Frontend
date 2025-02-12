@@ -14,8 +14,8 @@ export function FormSignIn() {
     const [showPassword, setShowPassword] = useState(false);
 
     const [state, onSubmit, isPending] = useActionState(signInSubmit, {
-        email: '',
-        password: '',
+        email: 'user@example.com',
+        password: 'StrongP@ss1',
     });
 
     const checkboxId = useId();
