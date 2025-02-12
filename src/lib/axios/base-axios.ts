@@ -1,5 +1,6 @@
 import { ApiResponse } from 'api-types';
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import Error from 'next/error';
 
 export class BaseAxios {
     protected axiosInstance: AxiosInstance;
@@ -20,10 +21,7 @@ export class BaseAxios {
                 this.handleErrorRequest(response.data);
                 return response;
             },
-            (error) => {
-                if (error.response?.status === 401) {
-                    console.error('Unauthorized! Redirecting to login...');
-                }
+            (error: AxiosError) => {
                 return Promise.reject(error);
             }
         );
@@ -34,7 +32,7 @@ export class BaseAxios {
             isLogged: JSON.parse(localStorage.getItem('logged') || 'false'),
             accessToken: JSON.parse(localStorage.getItem('access_token') || ''),
             accessType: JSON.parse(localStorage.getItem('access_type') || 'Bearer'),
-            tokenExpires: parseInt(JSON.parse((localStorage.getItem('access_expires') || '0'))),
+            tokenExpires: parseInt(JSON.parse(localStorage.getItem('access_expires') || '0')),
         };
     }
 
@@ -54,7 +52,10 @@ export class BaseAxios {
 
     protected handleErrorRequest(response: ApiResponse<any>) {
         if (response.payload?.code >= 400) {
-            throw new Error(response.payload.message_code);
+            throw new Error({
+                statusCode: response.payload.code,
+                title: response.payload.message_code,
+            });
         }
     }
 

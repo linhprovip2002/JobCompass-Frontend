@@ -1,11 +1,33 @@
-import { useActionState } from 'react';
+import { useActionState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '../ui/input';
 import { LuArrowRight } from 'react-icons/lu';
+import { useSearchParams } from 'next/navigation';
+import { verifyEmail } from '@/lib/action';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function FormEmailVerify() {
+    const searchParams = useSearchParams();
+    const email = searchParams.get('email');
+    const router = useRouter();
+    const [state, onSubmit, isPending] = useActionState(verifyEmail, {
+        email,
+        code: '',
+        errors: {},
+        success: false,
+    });
+    useEffect(() => {
+        if (state.errors?.code) {
+            toast.error(state.errors.code[0]);
+        }
+        if (state.success && state.email) {
+            router.push('/');
+        }
+    }, [state.success, state.errors]);
     return (
-        <form className="h-full flex flex-col items-center justify-center px-4 text-center">
+        <form className="h-full flex flex-col items-center justify-center px-4 text-center" action={onSubmit}>
             <div className="flex flex-col items-center justify-center">
                 <div className="max-w-[536px] space-y-9 text-center px-5 md:px-0">
                     <h1 className="text-[32px] leading-[40px] font-inter font-medium">Email Verification</h1>
@@ -18,6 +40,7 @@ export function FormEmailVerify() {
 
                     <div>
                         <Input
+                            defaultValue={state.code}
                             name="code"
                             placeholder="Verification Code"
                             type="text"
@@ -27,6 +50,7 @@ export function FormEmailVerify() {
                     <Button
                         type="submit"
                         className="group w-full h-14 rounded-sm text-base [&_svg]:size-6 font-semibold"
+                        isPending={isPending}
                     >
                         Verify My Account <LuArrowRight className="group-hover:translate-x-2 transition-all" />
                     </Button>
