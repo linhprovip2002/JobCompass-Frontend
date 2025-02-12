@@ -1,8 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { roles } from '@/lib/data/roles.data';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { LuArrowRight } from 'react-icons/lu';
@@ -12,8 +10,9 @@ import { Button } from '@/components/ui/button';
 import { InputPassword } from '@/components/custom-ui/input-password';
 import { ButtonOptionsSignIn } from '@/components/custom-ui/button-options-sign-in';
 import { useRouter } from 'next/navigation';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import clsx from 'clsx';
 
 export function FormSignUp() {
     const [showPassword, setShowPassword] = useState(false);
@@ -32,8 +31,12 @@ export function FormSignUp() {
 
     useEffect(() => {
         if (state.errors?.email) {
-            toast.error(state.errors.email[0]);
+            const emailError = state.errors.email[0];
+            if (emailError === 'This email is already registered.') {
+                toast.error(emailError);
+            }
         }
+
         if (state.success && state.email) {
             router.push(`/email-verify?email=${state.email}`);
         }
@@ -51,29 +54,54 @@ export function FormSignUp() {
             </div>
             <div className="space-y-5">
                 <div className="flex items-center gap-5">
-                    <Input
-                        defaultValue={state.full_name}
-                        name="full_name"
-                        placeholder="Full name"
-                        type="text"
-                        className="h-12 rounded-sm focus-visible:border-primary focus-visible:ring-primary"
-                    />
-                    {state.errors?.full_name && <p className="text-red-500 text-sm">{state.errors.full_name[0]}</p>}
-                    <Input
-                        defaultValue={state.username}
-                        name="username"
-                        placeholder="Username"
-                        type="text"
-                        className="h-12 rounded-sm focus-visible:border-primary focus-visible:ring-primary"
-                    />
-                    {state.errors?.username && <p className="text-red-500 text-sm">{state.errors.username[0]}</p>}
+                    <div className="flex flex-col">
+                        <Input
+                            defaultValue={state.full_name}
+                            color="danger"
+                            name="full_name"
+                            placeholder="Full name"
+                            type="text"
+                            className={clsx(
+                                'h-12 rounded-sm',
+                                state.errors?.full_name
+                                    ? 'border-2 border-danger ring-danger'
+                                    : 'focus-visible:border-primary focus-visible:ring-primary'
+                            )}
+                        />
+                        {state.errors?.full_name && (
+                            <p className="text-red-500 text-sm mt-1">{state.errors.full_name[0]}</p>
+                        )}
+                    </div>
+
+                    <div className="flex flex-col">
+                        <Input
+                            defaultValue={state.username}
+                            name="username"
+                            placeholder="Username"
+                            type="text"
+                            className={clsx(
+                                'h-12 rounded-sm',
+                                state.errors?.username
+                                    ? 'border-2 border-danger ring-danger'
+                                    : 'focus-visible:border-primary focus-visible:ring-primary'
+                            )}
+                        />
+                        {state.errors?.username && (
+                            <p className="text-red-500 text-sm mt-1">{state.errors.username[0]}</p>
+                        )}
+                    </div>
                 </div>
                 <Input
                     defaultValue={state.email}
                     name="email"
                     placeholder="Email address"
                     type="text"
-                    className="h-12 rounded-sm focus-visible:border-primary focus-visible:ring-primary"
+                    className={clsx(
+                        'h-12 rounded-sm',
+                        state.errors?.email
+                            ? 'border-2 border-danger ring-danger'
+                            : 'focus-visible:border-primary focus-visible:ring-primary'
+                    )}
                 />
                 {state.errors?.email && <p className="text-red-500 text-sm">{state.errors.email[0]}</p>}
                 <InputPassword
@@ -83,7 +111,12 @@ export function FormSignUp() {
                     type="text"
                     hide={!showPassword}
                     setHide={setShowPassword}
-                    className="h-12 rounded-sm border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary focus-visible:ring-primary"
+                    className={clsx(
+                        'h-12 rounded-sm',
+                        state.errors?.password
+                            ? 'border-2 border-danger ring-danger'
+                            : 'focus-visible:border-primary focus-visible:ring-primary'
+                    )}
                 />
                 {state.errors?.password && <p className="text-red-500 text-sm">{state.errors.password[0]}</p>}
                 <InputPassword
@@ -93,7 +126,12 @@ export function FormSignUp() {
                     type="text"
                     hide={!showConfirmPassword}
                     setHide={setShowConfirmPassword}
-                    className="h-12 rounded-sm border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary focus-visible:ring-primary"
+                    className={clsx(
+                        'h-12 rounded-sm',
+                        state.errors?.confirmPassword
+                            ? 'border-2 border-danger ring-danger'
+                            : 'focus-visible:border-primary focus-visible:ring-primary'
+                    )}
                 />
                 {state.errors?.confirmPassword && (
                     <p className="text-red-500 text-sm">{state.errors.confirmPassword[0]}</p>
