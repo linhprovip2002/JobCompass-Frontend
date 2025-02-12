@@ -52,7 +52,7 @@ export function FormSignUp() {
                     </Link>
                 </div>
             </div>
-            <div className="space-y-5">
+            <div className="space-y-5"> 
                 <div className="flex items-center gap-5">
                     <div className="flex flex-col">
                         <Input
