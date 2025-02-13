@@ -11,6 +11,7 @@ import { signInSubmit } from '@/lib/action';
 import { ButtonOptionsSignIn } from '@/components/custom-ui/button-options-sign-in';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import clsx from 'clsx';
 
 export function FormSignIn() {
     const [showPassword, setShowPassword] = useState(false);
@@ -24,11 +25,6 @@ export function FormSignIn() {
 
     const checkboxId = useId();
     useEffect(() => {
-        if (state.errors?.username) {
-            toast.error(state.errors.username[0]);
-        } else if (state.errors?.password) {
-            toast.error(state.errors.password[0]);
-        }
         if (state.success) {
             toast.success('Login successful');
             document.cookie = 'login=true';
@@ -38,22 +34,42 @@ export function FormSignIn() {
     return (
         <form className="sign-in-form flex flex-col space-y-8" action={onSubmit} autoComplete="sign-in">
             <div className="space-y-5">
-                <Input
-                    defaultValue={state.username}
-                    name="username"
-                    placeholder="Email address"
-                    type="text"
-                    className="h-12 rounded-sm focus-visible:border-primary focus-visible:ring-primary"
-                />{' '}
-                <InputPassword
-                    defaultValue={state.password}
-                    name="password"
-                    placeholder="Password"
-                    type="text"
-                    hide={!showPassword}
-                    setHide={setShowPassword}
-                    className="h-12 rounded-sm border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary focus-visible:ring-primary"
-                />
+                <div className="relative">
+                    <Input
+                        defaultValue={state.username}
+                        name="username"
+                        placeholder="Email address"
+                        type="text"
+                        className={clsx(
+                            'h-12 rounded-sm',
+                            state.errors?.username
+                                ? 'border-2 border-danger ring-danger'
+                                : 'focus-visible:border-primary focus-visible:ring-primary'
+                        )}
+                    />
+                    <p className="absolute top-full bottom-0 line-clamp-1 text-red-500 text-[12px] font-medium mb-1 min-h-5">
+                        {state.errors?.username && state.errors.username[0]}
+                    </p>
+                </div>
+                <div className="relative">
+                    <InputPassword
+                        defaultValue={state.password}
+                        name="password"
+                        placeholder="Password"
+                        type="text"
+                        hide={!showPassword}
+                        setHide={setShowPassword}
+                        className={clsx(
+                            'h-12 rounded-sm',
+                            state.errors?.password
+                                ? 'border-2 border-danger ring-danger'
+                                : 'focus-visible:border-primary focus-visible:ring-primary'
+                        )}
+                    />
+                    <p className="absolute top-full bottom-0 line-clamp-1 text-red-500 text-[12px] font-medium mb-1 min-h-5">
+                        {state.errors?.password && state.errors.password[0]}
+                    </p>
+                </div>
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-[10px] text-gray-500">
                         <Checkbox name="remember" id={checkboxId} className="size-5 border-primary-200 shadow-none" />

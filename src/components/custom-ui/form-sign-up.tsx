@@ -11,7 +11,6 @@ import { InputPassword } from '@/components/custom-ui/input-password';
 import { ButtonOptionsSignIn } from '@/components/custom-ui/button-options-sign-in';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import clsx from 'clsx';
 
 export function FormSignUp() {
@@ -30,13 +29,6 @@ export function FormSignUp() {
     });
 
     useEffect(() => {
-        if (state.errors?.email) {
-            const emailError = state.errors.email[0];
-            if (emailError === 'This email is already registered.') {
-                toast.error(emailError);
-            }
-        }
-
         if (state.success && state.email) {
             router.push(`/email-verify?email=${state.email}`);
         }
@@ -54,7 +46,7 @@ export function FormSignUp() {
             </div>
             <div className="space-y-5">
                 <div className="flex items-center gap-5">
-                    <div className="flex flex-col">
+                    <div className="relative flex flex-col">
                         <Input
                             defaultValue={state.full_name}
                             color="danger"
@@ -68,12 +60,12 @@ export function FormSignUp() {
                                     : 'focus-visible:border-primary focus-visible:ring-primary'
                             )}
                         />
-                        {state.errors?.full_name && (
-                            <p className="text-red-500 text-sm mt-1">{state.errors.full_name[0]}</p>
-                        )}
+                        <p className="absolute top-full line-clamp-1 text-red-500 text-[12px] font-medium mb-1 min-h-5">
+                            {state.errors?.full_name && state.errors.full_name[0]}
+                        </p>
                     </div>
 
-                    <div className="flex flex-col">
+                    <div className="relative flex flex-col">
                         <Input
                             defaultValue={state.username}
                             name="username"
@@ -86,60 +78,75 @@ export function FormSignUp() {
                                     : 'focus-visible:border-primary focus-visible:ring-primary'
                             )}
                         />
-                        {state.errors?.username && (
-                            <p className="text-red-500 text-sm mt-1">{state.errors.username[0]}</p>
-                        )}
+                        <p className="absolute top-full bottom-0 line-clamp-1 text-red-500 text-[12px] font-medium mb-1 min-h-5">
+                            {state.errors?.username && state.errors.username[0]}
+                        </p>
                     </div>
                 </div>
-                <Input
-                    defaultValue={state.email}
-                    name="email"
-                    placeholder="Email address"
-                    type="text"
-                    className={clsx(
-                        'h-12 rounded-sm',
-                        state.errors?.email
-                            ? 'border-2 border-danger ring-danger'
-                            : 'focus-visible:border-primary focus-visible:ring-primary'
-                    )}
-                />
-                {state.errors?.email && <p className="text-red-500 text-sm">{state.errors.email[0]}</p>}
-                <InputPassword
-                    defaultValue={state.password}
-                    name="password"
-                    placeholder="Password"
-                    type="text"
-                    hide={!showPassword}
-                    setHide={setShowPassword}
-                    className={clsx(
-                        'h-12 rounded-sm',
-                        state.errors?.password
-                            ? 'border-2 border-danger ring-danger'
-                            : 'focus-visible:border-primary focus-visible:ring-primary'
-                    )}
-                />
-                {state.errors?.password && <p className="text-red-500 text-sm">{state.errors.password[0]}</p>}
-                <InputPassword
-                    defaultValue={state.confirmPassword}
-                    name="confirmPassword"
-                    placeholder="Confirm password"
-                    type="text"
-                    hide={!showConfirmPassword}
-                    setHide={setShowConfirmPassword}
-                    className={clsx(
-                        'h-12 rounded-sm',
-                        state.errors?.confirmPassword
-                            ? 'border-2 border-danger ring-danger'
-                            : 'focus-visible:border-primary focus-visible:ring-primary'
-                    )}
-                />
-                {state.errors?.confirmPassword && (
-                    <p className="text-red-500 text-sm">{state.errors.confirmPassword[0]}</p>
-                )}
+                <div className="relative">
+                    <Input
+                        defaultValue={state.email}
+                        name="email"
+                        placeholder="Email address"
+                        type="text"
+                        className={clsx(
+                            'h-12 rounded-sm',
+                            state.errors?.email
+                                ? 'border-2 border-danger ring-danger'
+                                : 'focus-visible:border-primary focus-visible:ring-primary'
+                        )}
+                    />
+                    <p className="absolute top-full bottom-0 line-clamp-1 text-red-500 text-[12px] font-medium mb-1 min-h-5">
+                        {state.errors?.email && state.errors.email[0]}
+                    </p>
+                </div>
+                <div className="relative">
+                    <InputPassword
+                        defaultValue={state.password}
+                        name="password"
+                        placeholder="Password"
+                        type="text"
+                        hide={!showPassword}
+                        setHide={setShowPassword}
+                        className={clsx(
+                            'h-12 rounded-sm',
+                            state.errors?.password
+                                ? 'border-2 border-danger ring-danger'
+                                : 'focus-visible:border-primary focus-visible:ring-primary'
+                        )}
+                    />
+                    <p className="absolute top-full bottom-0 line-clamp-1 text-red-500 text-[12px] font-medium mb-1 min-h-5">
+                        {state.errors?.password && state.errors.password[0]}
+                    </p>
+                </div>
+                <div className="relative">
+                    <InputPassword
+                        defaultValue={state.confirmPassword}
+                        name="confirmPassword"
+                        placeholder="Confirm password"
+                        type="text"
+                        hide={!showConfirmPassword}
+                        setHide={setShowConfirmPassword}
+                        className={clsx(
+                            'h-12 rounded-sm',
+                            state.errors?.confirmPassword
+                                ? 'border-2 border-danger ring-danger'
+                                : 'focus-visible:border-primary focus-visible:ring-primary'
+                        )}
+                    />
+                    <p className="absolute top-full bottom-0 line-clamp-1 text-red-500 text-[12px] font-medium mb-1 min-h-5">
+                        {state.errors?.confirmPassword && state.errors.confirmPassword[0]}
+                    </p>
+                </div>
             </div>
             <div className="flex items-center">
                 <div className="flex items-center gap-[10px] text-gray-500">
-                    <Checkbox name="remember" id={checkboxId} className="size-5 border-primary-200 shadow-none" />
+                    <Checkbox
+                        name="remember"
+                        id={checkboxId}
+                        className="size-5 border-primary-200 shadow-none"
+                        required
+                    />
                     <label htmlFor={checkboxId} className="select-none cursor-pointer text-sm">
                         I&#39;ve read and agree with your
                     </label>
@@ -157,7 +164,7 @@ export function FormSignUp() {
                 Create account <LuArrowRight className="group-hover:translate-x-2 transition-all" />
             </Button>
             <div className="space-y-4">
-                <p className="text-center text-sm text-gray-500">or</p>
+                <p className="line-clamp-1 text-center text-sm text-gray-500">or</p>
                 <ButtonOptionsSignIn />
             </div>
         </form>

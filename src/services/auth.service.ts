@@ -3,7 +3,7 @@ import { ApiResponse, DetailedRequest, DetailedResponse } from 'api-types';
 import { AxiosError } from 'axios';
 import NextError from 'next/error';
 
-const axios = new BaseAxios('api/v1/auth');
+const axios = new BaseAxios('auth');
 
 export class AuthService {
     public static async login(data: DetailedRequest.SignInRequest) {
