@@ -7,10 +7,11 @@ import { verifyEmail } from '@/lib/action';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { AuthService } from '@/services/auth.service';
 
 export function FormEmailVerify() {
     const searchParams = useSearchParams();
-    const email = searchParams.get('email');
+    const email = searchParams.get('email') || '';
     const router = useRouter();
     const [state, onSubmit, isPending] = useActionState(verifyEmail, {
         email,
@@ -18,6 +19,17 @@ export function FormEmailVerify() {
         errors: {},
         success: false,
     });
+    const handleResend = async () => {
+        const data = { email: email };
+        try {
+            const temp = await AuthService.reSendEmail(data);
+            if (temp.code >= 200) {
+                toast.success('Email sent successfully.');
+            }
+        } catch (err) {
+            toast.error('Failed to resend verification email');
+        }
+    };
     useEffect(() => {
         if (state.errors?.code) {
             toast.error(state.errors.code[0]);
@@ -56,7 +68,10 @@ export function FormEmailVerify() {
                     </Button>
 
                     <p className="text-sm">
-                        Didn&apos;t receive any code? <button className="text-blue-600 hover:underline">Resend</button>
+                        Didn&apos;t receive any code?{' '}
+                        <button type="button" className="text-blue-600 hover:underline" onClick={handleResend}>
+                            Resend
+                        </button>
                     </p>
                 </div>
             </div>
