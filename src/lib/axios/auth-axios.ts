@@ -1,11 +1,11 @@
-import { InternalAxiosRequestConfig } from "axios";
-import { BaseAxios } from "./base-axios";
-import { AuthService } from "@/services/auth.service";
+import { InternalAxiosRequestConfig } from 'axios';
+import { BaseAxios } from './base-axios';
+import { AuthService } from '@/services/auth.service';
 
 export class AuthAxios extends BaseAxios {
     constructor(prefix: string) {
-        super(prefix)
-        this._initRequestInterceptor()
+        super(prefix);
+        this._initRequestInterceptor();
     }
 
     private _initRequestInterceptor() {
@@ -20,9 +20,9 @@ export class AuthAxios extends BaseAxios {
                         return config;
                     }
                 }
-        
+
                 if (accessToken && accessType) {
-                    console.log({accessToken, accessType})
+                    console.log({ accessToken, accessType });
                     config.headers['Authorization'] = `${accessType} ${accessToken}`;
                 }
                 return config;
