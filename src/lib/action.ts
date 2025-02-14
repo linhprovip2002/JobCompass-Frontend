@@ -36,7 +36,7 @@ export const signInSubmit = async (currentState: DetailedRequest.SignInRequest, 
             errors: {},
             success: true,
         };
-    } catch (err: any) {
+    } catch (err:  any) {
         if (err.props.title) {
             const errorMessage = errorKeyMessage[err.props.title as keyof typeof errorKeyMessage];
             toast.error(errorMessage);

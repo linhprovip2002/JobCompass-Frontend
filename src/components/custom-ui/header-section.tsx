@@ -2,7 +2,6 @@
 
 import { Nav } from '@/components/custom-ui/nav';
 import { PiPhoneCall } from 'react-icons/pi';
-import { SelectLanguage } from '@/components/custom-ui/select-language';
 import { ButtonHome } from '@/components/custom-ui/button-home';
 import { Search } from '@/components/custom-ui/search';
 import { SwitchSignIn } from '@/components/custom-ui/switch-sign-in';

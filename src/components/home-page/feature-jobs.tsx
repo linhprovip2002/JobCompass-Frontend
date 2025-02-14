@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { HomePart } from './home-part';
-import { ArrowRight, Bookmark, Building2, MapPin, Users } from 'lucide-react';
+import { ArrowRight, Building2, MapPin, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';

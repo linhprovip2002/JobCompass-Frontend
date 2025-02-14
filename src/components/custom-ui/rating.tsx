@@ -7,7 +7,7 @@ import { GoStarFill } from 'react-icons/go';
 type Props = {
     stars?: number;
     value?: number;
-    setValue?: Dispatch<SetStateAction<Number>>;
+    setValue?: Dispatch<SetStateAction<number>>;
     size?: 'xs' | 'sm' | 'md' | 'lg';
     className?: string;
     interactive?: boolean;
@@ -29,8 +29,11 @@ export const Rating = ({ stars = 5, value = 3, setValue, size = 'md', className,
         setCurrent(value);
     };
     const handleChange = () => {
-        setValue && setValue(current);
+        if (setValue) {
+            setValue(current);
+        }
     };
+    
     return (
         <div className={className}>
             <div className="flex items-center gap-1">

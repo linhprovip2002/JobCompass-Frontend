@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { Card } from '@/components/ui/card';
-import _ from 'lodash';
 import { motion } from 'framer-motion';
 import default_avatar from '@/assets/images/avatar/default-avatar.jpg';
 import { HomePart } from './home-part';

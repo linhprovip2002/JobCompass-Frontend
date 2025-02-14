@@ -10,7 +10,6 @@ import { Button } from '@/components/ui/button';
 import { InputPassword } from '@/components/custom-ui/input-password';
 import { ButtonOptionsSignIn } from '@/components/custom-ui/button-options-sign-in';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
 import clsx from 'clsx';
 
 export function FormSignUp() {

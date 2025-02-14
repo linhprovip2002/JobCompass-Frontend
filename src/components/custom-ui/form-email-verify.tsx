@@ -1,3 +1,4 @@
+'use client';
 import { useActionState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '../ui/input';
@@ -6,8 +7,6 @@ import { useSearchParams } from 'next/navigation';
 import { verifyEmail } from '@/lib/action';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 export function FormEmailVerify() {
     const searchParams = useSearchParams();
     const email = searchParams.get('email');
