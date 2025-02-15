@@ -39,8 +39,8 @@ jobs:
       - name: Deploy to Server
         run: |
           ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            docker stop jobcompass-frontend || true
-            docker rm jobcompass-frontend || true
-            docker pull ${{ secrets.DOCKER_USERNAME }}/jobcompass-frontend:latest
-            docker run -d --name jobcompass-frontend -p 80:80 ${{ secrets.DOCKER_USERNAME }}/jobcompass-frontend:latest
+            sudo docker stop jobcompass-frontend || true
+            sudo docker rm jobcompass-frontend || true
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/jobcompass-frontend:latest
+            sudo docker run -d --name jobcompass-frontend -p 80:80 ${{ secrets.DOCKER_USERNAME }}/jobcompass-frontend:latest
           EOF
