@@ -30,7 +30,7 @@ export function PopularCategory() {
             }
         >
             <motion.div
-                className="grid grid-cols-2 md:grid-cols-4 gap-4"
+                className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
                 variants={motionVariant.containerVariants}
                 initial="hidden"
                 whileInView="visible"
@@ -40,13 +40,13 @@ export function PopularCategory() {
                     const Icon = category.icon;
                     return (
                         <motion.div key={index} variants={motionVariant.itemVariants}>
-                            <IconPresent.Group className="p-6 hover:bg-white rounded-md hover:shadow-primary-50 hover:shadow-lg">
+                            <IconPresent.Group className="md:p-6 hover:bg-white rounded-md hover:shadow-primary-50 hover:shadow-lg">
                                 <Link href="/">
-                                    <div className="flex items-center gap-3">
+                                    <div className="flex items-center gap-2 md:gap-3 overflow-hidden">
                                         <IconPresent.Icon Icon={Icon} size="md" />
                                         <div>
                                             <h3 className="font-medium text-lg line-clamp-1">{category.name}</h3>
-                                            <p className="text-sm text-gray-600">{category.jobs} Open positions</p>
+                                            <p className="text-sm text-gray-600">{category.jobs} positions</p>
                                         </div>
                                     </div>
                                 </Link>

@@ -15,9 +15,8 @@ import {
 import { PiUserCircle, PiTimer, PiUsers, PiSignOutFill, PiBuilding } from 'react-icons/pi';
 
 export function SwitchSignIn() {
-    const isLogged = true;
-
-    return !isLogged ? (
+    const isLogged = false; // replace with actual logic
+    return isLogged ? (
         <div className="flex items-center justify-between lg:justify-normal gap-2 lg:gap-6">
             <div className="relative">
                 {/*notification*/}

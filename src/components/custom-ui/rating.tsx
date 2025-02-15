@@ -33,7 +33,7 @@ export const Rating = ({ stars = 5, value = 3, setValue, size = 'md', className,
             setValue(current);
         }
     };
-    
+
     return (
         <div className={className}>
             <div className="flex items-center gap-1">
