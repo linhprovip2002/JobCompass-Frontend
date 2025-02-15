@@ -42,5 +42,5 @@ jobs:
             sudo docker stop jobcompass-frontend || true
             sudo docker rm jobcompass-frontend || true
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/jobcompass-frontend:latest
-            sudo docker run -d --name jobcompass-frontend -p 80:80 ${{ secrets.DOCKER_USERNAME }}/jobcompass-frontend:latest
+            sudo docker run -d --name jobcompass-frontend -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/jobcompass-frontend:latest
           EOF
