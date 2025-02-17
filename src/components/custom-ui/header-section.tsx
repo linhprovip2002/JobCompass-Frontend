@@ -60,7 +60,7 @@ export function HeaderSection() {
             {/*     */}
 
             {/*for desktop: header search, login,...*/}
-            <div className="bg-white px-3 py-5">
+            <div className="bg-white px-3 lg:py-5">
                 <div className="mx-auto py-5` container max-w-screen-xl flex items-center">
                     <div className="hidden lg:block">
                         <ButtonHome />

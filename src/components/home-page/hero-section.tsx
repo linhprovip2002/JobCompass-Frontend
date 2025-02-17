@@ -25,24 +25,28 @@ export function HeroSection() {
                             Choose from thousands of jobs available to match your skills and interests. Apply to your
                             dream job today!
                         </p>
-                        <div className="p-3 flex gap-2 max-w-screen-md h-20 bg-white rounded-lg border border-gray-100 drop-shadow-sm">
-                            <div className="flex items-center border-r">
-                                <Search className="sm:mx-2 h-6 w-6 text-primary" />
-                                <Input
-                                    className="flex-1 h-full border-none shadow-none focus-visible:ring-0 text-base font-normal"
-                                    placeholder="Job title, keyword..."
-                                />
+                        <div className="p-3 flex items-center gap-2 max-w-screen-md min-h-20 bg-white rounded-lg border border-gray-100 drop-shadow-sm">
+                            <div className="flex-1 flex items-center flex-wrap sm:flex-nowrap gap-2 border-r sm:border-r-0">
+                                <div className="flex items-center sm:border-r">
+                                    <Search className="sm:mx-2 h-6 w-6 text-primary" />
+                                    <Input
+                                        className="flex-1 h-full border-none shadow-none focus-visible:ring-0 text-base font-normal"
+                                        placeholder="Job title, keyword..."
+                                    />
+                                </div>
+                                <div className="flex items-center">
+                                    <MapPin className="sm:mx-2 h-6 w-6 text-primary" />
+                                    <Input
+                                        className="flex-1 h-full border-none shadow-none focus-visible:ring-0 text-base font-normal"
+                                        placeholder="Your location"
+                                    />
+                                </div>
                             </div>
                             <div className="flex items-center">
-                                <MapPin className="sm:mx-2 h-6 w-6 text-primary" />
-                                <Input
-                                    className="flex-1 h-full border-none shadow-none focus-visible:ring-0 text-base font-normal"
-                                    placeholder="Your location"
-                                />
+                                <Button size="xl" className="text-base">
+                                    Find Jobs
+                                </Button>
                             </div>
-                            <Button size="xl" className="h-full text-base">
-                                Find Jobs
-                            </Button>
                         </div>
                     </div>
                     <div className="hidden lg:flex justify-end">
@@ -51,17 +55,17 @@ export function HeroSection() {
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4 mt-16">
                     {stats.map((stat, index) => {
                         const Icon = stat.icon;
                         return (
                             <IconPresent.Group
                                 key={index}
-                                className="p-5 flex items-center gap-4 lg:gap-9 bg-white rounded-md border border-gray-100 hover:shadow-primary-100 hover:shadow-lg cursor-default"
+                                className="p-3 md:p-5 flex items-center gap-4 lg:gap-9 bg-white rounded-md border border-gray-100 hover:shadow-primary-100 hover:shadow-lg cursor-default"
                             >
                                 <IconPresent.Icon Icon={Icon} size="lg" />
                                 <div>
-                                    <h3 className="text-2xl font-medium text-black">
+                                    <h3 className="text-xl md:text-2xl font-medium text-black">
                                         <CountUp start={0} end={stat.number} duration={2.5} separator="," />
                                     </h3>
                                     <p className="text-gray-600 text-base">{stat.label}</p>

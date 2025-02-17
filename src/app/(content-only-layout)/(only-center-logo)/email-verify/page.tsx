@@ -9,7 +9,7 @@ export default function EmailVerify() {
             <div>
                 <ToastContainer position="top-right" autoClose={3000} />
                 <Suspense fallback={<div>Loading...</div>}>
-                <FormEmailVerify />
+                    <FormEmailVerify />
                 </Suspense>
             </div>
             ;
