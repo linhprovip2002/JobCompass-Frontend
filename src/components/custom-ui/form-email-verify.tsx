@@ -3,20 +3,22 @@ import { useActionState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '../ui/input';
 import { LuArrowRight } from 'react-icons/lu';
-import { useSearchParams } from 'next/navigation';
 import { verifyEmail } from '@/lib/action';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'react-toastify';
 export function FormEmailVerify() {
-    const searchParams = useSearchParams();
-    const email = searchParams.get('email');
     const router = useRouter();
+
+    const search = useSearchParams();
+    const email = search.get('email') || '';
+
     const [state, onSubmit, isPending] = useActionState(verifyEmail, {
         email,
         code: '',
         errors: {},
         success: false,
     });
+
     useEffect(() => {
         if (state.errors?.code) {
             toast.error(state.errors.code[0]);
@@ -32,9 +34,8 @@ export function FormEmailVerify() {
                     <h1 className="text-[32px] leading-[40px] font-inter font-medium">Email Verification</h1>
 
                     <p className="font-inter text-base leading-6 text-muted-foreground">
-                        We&apos;ve sent a verification to{' '}
-                        <span className="font-medium text-foreground">emailaddress@gmail.com</span> to verify your email
-                        address and activate your account.
+                        We&apos;ve sent a verification to <span className="font-medium text-foreground">{email}</span>{' '}
+                        to verify your email address and activate your account.
                     </p>
 
                     <div>

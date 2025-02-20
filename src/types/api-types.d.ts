@@ -17,6 +17,58 @@ declare module 'api-types' {
         status: string;
         roles: string[];
     }
+    interface Job {
+        createdAt: string;
+        updatedAt: string;
+        isActive: boolean;
+        jobId: string;
+        name: string;
+        lowestWage: string;
+        highestWage: string;
+        description: string;
+        type: string;
+        experience: number;
+        deadline: string;
+        introImg: string;
+        status: boolean;
+        enterprise: Enterprise;
+        address: Address;
+    }
+    interface Enterprise {
+        createdAt: string;
+        updatedAt: string;
+        isActive: boolean;
+        enterpriseId: string;
+        name: string;
+        email: string;
+        phone: string;
+        description: string;
+        enterpriseBenefits: string;
+        companyVision: string;
+        logoUrl: string;
+        foundedIn: string;
+        organizationType: string;
+        teamSize: string;
+        industryType: string;
+        bio: string;
+        isPremium: boolean;
+        expiredPremium: string;
+    }
+    interface Meta {
+        page: string;
+        take: string;
+        itemCount: number;
+        pageCount: number;
+        hasPreviousPage: boolean;
+        hasNextPage: boolean;
+    }
+    interface Address {
+        isActive: boolean;
+        country: string;
+        city: string;
+        street: string;
+        zipCode: number;
+    }
 
     namespace DetailedResponse {
         interface RefreshToken {
@@ -39,6 +91,28 @@ declare module 'api-types' {
         }
         type ForgetPassword = any;
         type ResetPassword = any;
+        interface JobCardProps {
+            id: string;
+            title: string;
+            company: string;
+            location: string;
+            type: string;
+            applicants: string;
+            featured?: boolean;
+            salary: string;
+            logo: string;
+        }
+        interface GetAllJobs {
+            data: Job[];
+            meta: {
+                page: string;
+                take: string;
+                itemCount: number;
+                pageCount: number;
+                hasPreviousPage: boolean;
+                hasNextPage: boolean;
+            };
+        }
     }
 
     namespace DetailedRequest {
@@ -72,6 +146,18 @@ declare module 'api-types' {
             newPassword: string;
             token: string;
             iv: string;
+        }
+        interface SearchFilterListJobsCredentials {
+            keyword: string;
+            location: string;
+            category: string;
+            advance: string;
+        }
+        interface ParamListJobsCredentials {
+            order: string;
+            page: number;
+            take: number;
+            option: string;
         }
     }
 }

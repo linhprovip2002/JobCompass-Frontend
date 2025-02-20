@@ -3,5 +3,5 @@ export const routes = {
     signIn: '/sign-in',
     signUp: '/sign-up',
     forgetPassword: '/forget-password',
-    verifyEmail: '/verify-email',
+    verifyEmail: '/email-verify',
 };

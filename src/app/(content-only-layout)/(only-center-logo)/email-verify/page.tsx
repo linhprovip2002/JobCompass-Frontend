@@ -7,8 +7,8 @@ export default function EmailVerify() {
     return (
         <div>
             <div>
-                <ToastContainer position="top-right" autoClose={3000} />
                 <Suspense fallback={<div>Loading...</div>}>
+                    <ToastContainer position="top-right" autoClose={3000} />
                     <FormEmailVerify />
                 </Suspense>
             </div>
