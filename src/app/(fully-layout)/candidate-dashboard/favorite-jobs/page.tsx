@@ -2,14 +2,7 @@
 
 import React, { Fragment, Suspense, useState } from 'react';
 import {
-    getPageNumbers,
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
+    PrimaryPagination,
 } from '@/components/ui/pagination';
 import { useSearchParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -48,7 +41,7 @@ function PageContent() {
         queryFn: async ({ queryKey }) => {
             try {
                 const payload = await JobService.getFavoriteJobs(queryKey[1] as DetailedRequest.Pagination);
-                setTotalPages(Number(payload?.meta.pageCount) || 0);
+                if (Number(payload?.meta.pageCount) > 0) setTotalPages(Number(payload?.meta.pageCount) || 0);
                 return payload;
             } catch (error: any) {
                 handleErrorToast(error);
@@ -109,39 +102,14 @@ function PageContent() {
             </div>
             {Number(totalPages) > 1 && (
                 <div>
-                    <Pagination>
-                        <PaginationContent>
-                            <PaginationItem className="mr-2">
-                                <PaginationPrevious
-                                    href={`?page=${Number(resultQuery?.meta.page) - 1}`}
-                                    disabled={!resultQuery?.meta.hasPreviousPage}
-                                />
-                            </PaginationItem>
-                            {getPageNumbers({ ...resultQuery?.meta, pageCount: totalPages } as Meta).map(
-                                (pageNum, index) =>
-                                    pageNum === 'ellipsis1' || pageNum === 'ellipsis2' || pageNum === 'ellipsis' ? (
-                                        <PaginationItem key={index}>
-                                            <PaginationEllipsis />
-                                        </PaginationItem>
-                                    ) : (
-                                        <PaginationItem key={index}>
-                                            <PaginationLink
-                                                href={`?page=${pageNum}`}
-                                                isActive={resultQuery?.meta.page === pageNum}
-                                            >
-                                                {pageNum}
-                                            </PaginationLink>
-                                        </PaginationItem>
-                                    )
-                            )}
-                            <PaginationItem className="ml-2">
-                                <PaginationNext
-                                    href={`?page=${Number(resultQuery?.meta.page) + 1}`}
-                                    disabled={!resultQuery?.meta.hasNextPage}
-                                />
-                            </PaginationItem>
-                        </PaginationContent>
-                    </Pagination>
+                    <PrimaryPagination
+                        meta={resultQuery?.meta as Meta}
+                        pagination={{
+                            page,
+                            order,
+                        }}
+                        totalPages={totalPages}
+                    />
                 </div>
             )}
         </div>

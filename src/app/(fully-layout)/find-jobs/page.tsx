@@ -26,7 +26,7 @@ export default function Page() {
         }));
     };
     return (
-        <main className="min-h-screen bg-white">
+        <main className="min-h-dvh bg-white">
             <SearchForm onSearch={handleSearch} />
             <div className="flex flex-col md:flex-row justify-between items-center max-w-screen-xl mx-auto mb-6 mt-6 gap-28">
                 <div className="flex flex-wrap items-center gap-2">

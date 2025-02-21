@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { ButtonProps, buttonVariants } from '@/components/ui/button';
 import { Url } from 'next/dist/shared/lib/router/router';
 import Link from 'next/link';
-import { Meta } from '@/types';
+import { DetailedRequest, Meta } from '@/types';
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
     <nav
@@ -138,6 +138,51 @@ const getPageNumbers = (meta: Meta) => {
     return rangeWithDots;
 };
 
+const PrimaryPagination = ({
+    meta,
+    totalPages,
+    pagination,
+}: {
+    meta: Meta;
+    pagination: DetailedRequest.Pagination;
+    totalPages: number | string;
+}) => {
+    return (
+        <Pagination>
+            <PaginationContent>
+                <PaginationItem className="mr-2">
+                    <PaginationPrevious
+                        href={`?page=${Number(meta?.page) - 1}&order=${pagination.order}&option=${pagination.option}`}
+                        disabled={!meta?.hasPreviousPage}
+                    />
+                </PaginationItem>
+                {getPageNumbers({ ...meta, pageCount: totalPages } as Meta).map((pageNum, index) =>
+                    pageNum === 'ellipsis1' || pageNum === 'ellipsis2' || pageNum === 'ellipsis' ? (
+                        <PaginationItem key={index}>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+                    ) : (
+                        <PaginationItem key={index}>
+                            <PaginationLink
+                                href={`?page=${pageNum}&order=${pagination.order}&option=${pagination.option}`}
+                                isActive={meta?.page === pageNum}
+                            >
+                                {pageNum}
+                            </PaginationLink>
+                        </PaginationItem>
+                    )
+                )}
+                <PaginationItem className="ml-2">
+                    <PaginationNext
+                        href={`?page=${Number(meta?.page) + 1}&order=${pagination.order}&option=${pagination.option}`}
+                        disabled={!meta?.hasNextPage}
+                    />
+                </PaginationItem>
+            </PaginationContent>
+        </Pagination>
+    );
+};
+
 export {
     Pagination,
     PaginationContent,
@@ -147,4 +192,5 @@ export {
     PaginationNext,
     PaginationEllipsis,
     getPageNumbers,
+    PrimaryPagination,
 };
