@@ -27,6 +27,7 @@ export function FormEmailVerify() {
                 toast.success('Email sent successfully.');
             }
         } catch (err) {
+            console.log(err);
             toast.error('Failed to resend verification email');
         }
     };
@@ -37,7 +38,7 @@ export function FormEmailVerify() {
         if (state.success && state.email) {
             router.push('/');
         }
-    }, [state.success, state.errors]);
+    }, [state.success, state.errors, router, state.email]);
     return (
         <form className="h-full flex flex-col items-center justify-center px-4 text-center" action={onSubmit}>
             <div className="flex flex-col items-center justify-center">

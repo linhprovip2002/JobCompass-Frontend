@@ -31,7 +31,7 @@ export function FormSignIn() {
             document.cookie = 'login=true';
             router.push('/');
         }
-    }, [state.success, state.errors]);
+    }, [state.success, state.errors, router]);
     return (
         <form className="sign-in-form flex flex-col space-y-8" action={onSubmit} autoComplete="sign-in">
             <div className="space-y-5">

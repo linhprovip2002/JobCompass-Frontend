@@ -32,7 +32,7 @@ export function FormSignUp() {
         if (state.success && state.email) {
             router.push(`/email-verify?email=${state.email}`);
         }
-    }, [state.success, state.errors]);
+    }, [state.success, state.errors, state.email, router]);
     return (
         <form className="sign-up-form flex flex-col space-y-8" action={onSubmit} autoComplete="sign-up">
             <div className="flex items-center justify-between">

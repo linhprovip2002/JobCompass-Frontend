@@ -32,7 +32,7 @@ export function FormResetPassword() {
             router.push(routes.signIn);
             toast.success(successKeyMessage.RESET_PASSWORD);
         }
-    }, [state.success]);
+    }, [state.success, router]);
 
     return (
         <form className="flex flex-col items-center justify-center px-4 text-center" action={onSubmit}>

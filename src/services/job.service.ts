@@ -1,5 +1,5 @@
 import { BaseAxios } from '@/lib/axios';
-import { ApiResponse, DetailedRequest, DetailedResponse, Job } from 'api-types';
+import { ApiResponse, DetailedRequest, DetailedResponse } from 'api-types';
 import { AxiosError } from 'axios';
 import NextError from 'next/error';
 

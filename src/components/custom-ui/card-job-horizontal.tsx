@@ -7,6 +7,7 @@ import { Building2, MapPin, Users } from 'lucide-react';
 import { ButtonMark } from '../custom-ui/button-mark';
 import { Button } from '@/components/ui/button';
 import { LuArrowRight } from 'react-icons/lu';
+import Image from 'next/image';
 
 export default function CardJobHorizontal(props: { job: Job }) {
     const { job } = props;
@@ -22,13 +23,13 @@ export default function CardJobHorizontal(props: { job: Job }) {
             <div className="flex gap-8 flex-wrap items-center justify-between p-8 rounded-xl border-2 border-gray-100 hover:border-primary transition-colors xl:w-[1320px]">
                 <div className="flex items-center gap-5">
                     <div className="w-16 h-w-16 bg-slate-100 rounded-lg flex items-center justify-center">
-                        <img
-                            loading="lazy"
+                        <Image
                             src={job.introImg || 'https://www.foxsports.com/soccer/cristiano-ronaldo-player'}
                             alt={job.enterprise.name}
                             width={68}
                             height={68}
-                            className="object-contain size-[68px] rounded-md "
+                            className="object-contain size-[68px] rounded-md"
+                            priority={false} // Set to true if it's a critical image above the fold
                         />
                     </div>
                     <div className="space-y-3">

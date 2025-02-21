@@ -24,7 +24,7 @@ export function FormForgetPassword() {
             toast.success(successKeyMessage.FORGET_PASSWORD);
             router.push('/sign-in');
         }
-    }, [state?.success]);
+    }, [state?.success, router]);
 
     return (
         <form className="sign-up-form flex flex-col gap-y-8" action={onSubmit} autoComplete="forget-password">
