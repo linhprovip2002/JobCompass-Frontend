@@ -30,13 +30,12 @@ export function FormPersonalProfile() {
 
     const handleSubmit = (currentState: any, formData: FormData) => {
         return settingPersonalProfile(currentState, formData).then((res) => {
-            refreshMe();
+            if (Object.keys(res.errors).length === 0) refreshMe();
             return res;
         });
     };
 
     const [state, onSubmit, isPending] = useActionState(handleSubmit, initialState);
-
     // Function to check if form has changed
     const checkFormChanged = () => {
         if (!formRef.current) return;

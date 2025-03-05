@@ -5,8 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { queryKey } from '@/lib/react-query/keys';
 import { useState } from 'react';
 import { DialogUpdateEnterprises } from './dialog-update-register-enterprise';
-import { handleErrorToast } from '@/lib/utils';
-import { set } from 'lodash';
 import { AlertCircle } from 'lucide-react';
 import { Button } from '../ui/button';
 
@@ -18,7 +16,7 @@ export function FormAccountSetting() {
             try {
                 const payload = await EnterpriseService.checkEnterprise();
                 return payload?.value ?? null;
-            } catch (error: any) {
+            } catch {
                 setCheck(true);
                 return null;
             }

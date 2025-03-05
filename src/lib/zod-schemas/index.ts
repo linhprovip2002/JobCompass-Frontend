@@ -65,7 +65,7 @@ const applyJobCoverLetterSchema = z.object({
 
 const updatePersonalProfile = z.object({
     fullname: z.string().min(1, 'Full name is required'),
-    phone: z.string().regex(/^\+(?:[0-9]\x20?){6,14}[0-9]$/, 'Phone is invalid'),
+    phone: z.string().regex(/^\+?[0-9]{7,15}$/, 'Phone is invalid'),
 });
 
 const updateCandidateProfile = z.object({

@@ -206,25 +206,44 @@ export const applyJob = async (currentState: any, formData: FormData, temp: stri
 
 export const settingPersonalProfile = async (currentState: any, formData: FormData) => {
     const uploadPromises = [];
-    const avatarFile = formData.get('avatar') as File;
-    if (avatarFile.size > 0) {
+    // get avatar file from inputs
+    const avatarFile =
+        (formData.get('avatar') as File).size === 0 && currentState.avatarFile
+            ? (currentState.avatarFile as File)
+            : (formData.get('avatar') as File);
+    // because the url include name of file, so if the url not including name means file is different from url => upload to cloud
+    if (!currentState.avatarUrl?.includes(avatarFile.name) && avatarFile.size > 0) {
         const uploadAvatar = (async () => await UploadService.uploadFile(avatarFile))();
         uploadPromises.push(uploadAvatar);
     }
+    // update current state
+    currentState.avatarFile = avatarFile;
 
-    const backgroundFile = formData.get('background') as File;
-    if (backgroundFile.size > 0) {
+    // get background file from inputs
+    const backgroundFile =
+        (formData.get('background') as File).size === 0 && currentState.backgroundFile
+            ? (currentState.backgroundFile as File)
+            : (formData.get('background') as File);
+    // because the url include name of file, so if the url not including name means file is different from url => upload to cloud
+    if (!currentState.backgroundUrl?.includes(backgroundFile.name) && backgroundFile.size > 0) {
         const uploadBackground = (async () => await UploadService.uploadFile(backgroundFile))();
         uploadPromises.push(uploadBackground);
     }
+    // update current state
+    currentState.backgroundFile = backgroundFile;
 
     const fullname = formData.get('fullname')?.toString() ?? '';
     const phone = formData.get('phone')?.toString() ?? '';
     const education = formData.get('education')?.toString() ?? '';
     const experience = formData.get('experience')?.toString() ?? '';
 
-    const validation = updatePersonalProfile.safeParse({ fullname, phone });
+    // update current state
+    currentState.fullname = fullname;
+    currentState.phone = phone;
+    currentState.education = education;
+    currentState.experience = experience;
 
+    const validation = updatePersonalProfile.safeParse({ fullname, phone });
     if (!validation.success) {
         return {
             ...currentState,
@@ -246,6 +265,7 @@ export const settingPersonalProfile = async (currentState: any, formData: FormDa
             pageUrl: background?.fileUrl || currentState.backgroundUrl,
         });
 
+        // update current state
         currentState.avatarUrl = updatedProfile?.profileUrl ?? currentState.avatarUrl;
         currentState.backgroundUrl = updatedProfile?.pageUrl ?? currentState.backgroundUrl;
         currentState.fullname = updatedProfile?.fullName ?? currentState.fullname;
@@ -476,7 +496,7 @@ export const updateRegisterEnterprice = async (currentState: any, formData: Form
             try {
                 const uploadedLogo = await UploadService.uploadFile(logoFile);
                 logoUrl = uploadedLogo.fileUrl;
-            } catch (error) {
+            } catch {
                 errors.logo = 'Failed to upload profile picture';
             }
         })();
