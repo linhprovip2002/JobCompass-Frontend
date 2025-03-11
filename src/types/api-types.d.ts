@@ -1,5 +1,5 @@
 import { UserType } from './common-types';
-import { Enterprise, Job, SocialLink } from './entities';
+import { Enterprise, Job, SocialLink, Tag } from './entities';
 
 export interface ApiResponse<T> {
     payload: {
@@ -59,12 +59,16 @@ export namespace DetailedResponse {
     export interface FavoriteJobs extends GetAllJobs {}
 
     export type GetAllCvByIdProfile = CV[];
-    export type GetAllTag = Tag[];
+    export type GetAllTag = {
+        data: Tag[];
+        meta: Meta;
+    };
     export type GetCategories = Categories[];
     export type GetAddressByEnterprisesId = Enterprise & {
         addresses: Address[];
     };
     export type GetDetailJob = Job;
+    export type getDataRegisterEnterprise = Enterprise;
 }
 
 export namespace DetailedRequest {
@@ -120,6 +124,17 @@ export namespace DetailedRequest {
         jobId: string;
     }
 
+    export interface UpdateEnterprisesCompanyFounding {
+        foundedIn: Date;
+        organizationType: string;
+        teamSize: string;
+        industryType: string;
+        bio: string;
+        email: string;
+        companyVision: string;
+        description: string;
+    }
+
     export interface UpdatePersonalProfile {
         profileUrl: string;
         pageUrl: string;
@@ -162,10 +177,23 @@ export namespace DetailedRequest {
         enterpriseBenefits: string;
         companyVision: string;
         logoUrl: string;
+        backgroundImageUrl: string;
         foundedIn: string;
         organizationType: string;
         teamSize: string;
         industryType: string;
         bio: string;
+        status: string;
+    }
+    export interface UpdateEnterprisesCompany {
+        name: string | null;
+        logoUrl?: string | null;
+        backgroundImageUrl?: string | null;
+        description: string | null;
+        phone: string | null;
+    }
+
+    export interface GetTagsByName extends Pagination {
+        name: string;
     }
 }

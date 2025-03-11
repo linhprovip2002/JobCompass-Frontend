@@ -24,3 +24,51 @@ export interface UserType {
 }
 
 export type SocialType = 'FACEBOOK' | 'TWITTER' | 'INSTAGRAM' | 'YOUTUBE' | 'LINKEDIN';
+
+export type PersonalProfileType = {
+    avatarFile: File | null;
+    backgroundFile: File | null;
+    avatarUrl: string;
+    backgroundUrl: string;
+    fullname: string;
+    phone: string;
+    education: string;
+    experience: string;
+};
+
+export type CandidateProfileType = {
+    nationality: string | null;
+    dateOfBirth: string | null;
+    gender: string | null;
+    maritalStatus: string | null;
+    introduction: string;
+};
+
+export enum OrganizationType {
+    PRIVATE = 'PRIVATE',
+    FLAT = 'FLAT',
+    PUBLIC = 'PUBLIC',
+    OUTSOURCE = 'OUTSOURCE',
+}
+
+export type CompanyProfileFoundingType = {
+    email: string;
+    companyVision: string;
+    foundedIn: Date;
+    organizationType: OrganizationType;
+    teamSize: string;
+    industryType: string;
+    bio: string;
+    description: string;
+};
+
+export type FormErrors = {
+    email: (string | null)[];
+    companyVision: (string | null)[];
+    foundedIn: (string | null)[];
+    organizationType: (string | null)[];
+    teamSize: (string | null)[];
+    industryType: (string | null)[];
+    bio: (string | null)[];
+    description: (string | null)[];
+};

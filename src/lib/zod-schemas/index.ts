@@ -65,7 +65,7 @@ const applyJobCoverLetterSchema = z.object({
 
 const updatePersonalProfile = z.object({
     fullname: z.string().min(1, 'Full name is required'),
-    phone: z.string().regex(/^\+(?:[0-9]\x20?){6,14}[0-9]$/, 'Phone is invalid'),
+    phone: z.string().regex(/^\+?[0-9]{7,15}$/, 'Phone is invalid'),
 });
 
 const updateCandidateProfile = z.object({
@@ -178,8 +178,8 @@ const addEnterpriseSchema = z.object({
         .string()
         .min(1, 'Name is required.')
         .max(255, 'Name must be between 1 and 255 characters.')
-        .refine((value) => /^[A-Z]/.test(value), {
-            message: 'name must start with an uppercase letter',
+        .refine((value) => /^[A-Z][a-zA-Z0-9\s]*$/.test(value), {
+            message: 'Name must start with an uppercase letter and contain only letters, numbers, and spaces.',
         }),
     email: z
         .string()
@@ -194,9 +194,13 @@ const addEnterpriseSchema = z.object({
     phone: z.string().regex(/^\+?\d{7,15}$/, 'Phone must be a valid phone number.'),
     description: z.string().min(20, 'Description is required and must be at least 20 characters'),
     vision: z.string().min(1, 'vision is required '),
-    // logoUrl: z.string().max(255, 'Logo URL must be at most 255 characters.').optional(),
     organizationType: z.string().min(1, 'Organization type is required'),
-    size: z.string().min(1, 'Team size is required '),
+    size: z
+        .string()
+        .min(1, 'Team size is required.')
+        .refine((value) => /^\d+$/.test(value), {
+            message: 'Team size must contain only numbers.',
+        }),
     industryType: z
         .string()
         .min(1, 'Industry is require')
@@ -213,10 +217,59 @@ const addEnterpriseSchema = z.object({
         .string({
             required_error: 'Founded in date is required',
         })
-        .nonempty('Founded in date cannot be empty'),
+        .nonempty('Founded in date cannot be empty')
+        .refine(
+            (data) => {
+                const founded = new Date(data);
+                const today = new Date();
+                return founded <= today;
+            },
+            {
+                message: 'Founded in date cannot be in the future',
+            }
+        ),
 });
 
+const companyProfileSchema = z.object({
+    logoUrl: z.string().optional(),
+    backgroundImageUrl: z.string().optional(),
+    logoFile: z.instanceof(File).optional().nullable(),
+    backgroundFile: z.instanceof(File).optional().nullable(),
+    name: z
+        .string()
+        .min(3, 'Company name must be at least 3 characters')
+        .max(100, 'Company name is too long')
+        .optional(),
+    phone: z.string().min(1, 'Phone is required').max(20, 'Phone is too long').optional(),
+    description: z
+        .string()
+        .min(10, 'Description must be at least 10 characters')
+        .max(1000, 'Description is too long')
+        .optional(),
+});
+
+export type CompanyProfileForm = z.infer<typeof companyProfileSchema>;
+
+// Define Zod Schema
+const companyProfileFoundingSchema = z.object({
+    name: z.string().min(1, 'Name is required'),
+    email: z.string().min(1, 'Email is required').email('Invalid email'),
+    phone: z.string().min(1, 'Phone is required'),
+    description: z.string().min(1, 'Description is required'),
+    companyVision: z.string().min(1, 'Vision is required'), // Fixed naming to match form
+    organizationType: z.string().min(1, 'Organization type is required'),
+    teamSize: z.string().min(1, 'Size is required'), // Fixed naming to match form
+    industryType: z.string().min(1, 'Industry type is required'),
+    bio: z.string().min(1, 'Bio is required'),
+    enterpriseBenefits: z.string().min(1, 'Enterprise benefits is required'),
+    foundedIn: z.string().min(1, 'Founded in is required'),
+});
+
+export type CompanyProfileFoundingForm = z.infer<typeof companyProfileFoundingSchema>;
+
 export {
+    companyProfileFoundingSchema,
+    companyProfileSchema,
     signUpSchema,
     verifySignInSchema,
     verifyEmailSchema,

@@ -11,7 +11,7 @@ import { Tag } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import { queryKey } from '@/lib/react-query/keys';
 import clsx from 'clsx';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import { successKeyMessage } from '@/lib/message-keys';
 import { useRouter } from 'next/navigation';
 import MultiSelectSearchInput from '@/components/custom-ui/selected-tags';
@@ -88,7 +88,6 @@ export default function PostJobForm() {
                                 ? 'border-2 border-danger ring-danger'
                                 : ' focus-visible:border-primary focus-visible:ring-primary'
                         )}
-                        placeholder="Add job title, role, vacancies etc"
                         defaultValue={state.title}
                         name="title"
                     />
@@ -97,7 +96,7 @@ export default function PostJobForm() {
                     </p>
                 </div>
 
-                <div className="flex flex-grow gap-x-2">
+                <div className="flex flex-col gap-y-2">
                     <h1>Tag</h1>
                     <div className="flex flex-grow gap-x-2">
                         <MultiSelectSearchInput
@@ -159,7 +158,6 @@ export default function PostJobForm() {
                                         : 'focus-visible:border-primary focus-visible:ring-primary'
                                 )}
                                 type="number"
-                                placeholder="Minimum salary..."
                                 defaultValue={state.minSalary}
                                 name="minSalary"
                             />
@@ -177,7 +175,6 @@ export default function PostJobForm() {
                                         : 'focus-visible:border-primary focus-visible:ring-primary'
                                 )}
                                 type="number"
-                                placeholder="Maximum salary..."
                                 defaultValue={state.maxSalary}
                                 name="maxSalary"
                             />
@@ -224,7 +221,6 @@ export default function PostJobForm() {
                                         : 'focus-visible:border-primary focus-visible:ring-primary'
                                 )}
                                 type="number"
-                                placeholder="Maximum salary..."
                                 defaultValue={state.experience}
                                 name="experience"
                             />

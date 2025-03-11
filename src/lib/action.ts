@@ -1,6 +1,5 @@
-import { BaseAxios } from './axios';
-import { DetailedRequest, SocialLink, SocialType } from '@/types';
-import { toast } from 'react-toastify';
+import { CandidateProfileType, DetailedRequest, PersonalProfileType, SocialLink } from '@/types';
+import { toast } from 'sonner';
 import { errorKeyMessage } from './message-keys';
 import {
     applyJobCoverLetterSchema,
@@ -25,12 +24,12 @@ import { getBackgroundColor, getRandomColor } from './random-color';
 import { TagService } from '@/services/tag.service';
 import { JobService } from '@/services/job.service';
 import { EnterpriseService } from '@/services/enterprises.service';
+import { storeTokenInfo } from './auth';
 
 export const signInSubmit = async (currentState: DetailedRequest.SignInRequest, formData: FormData) => {
     const username = formData.get('username')?.toString() ?? '';
     const password = formData.get('password')?.toString() ?? '';
     const data = { username, password };
-    const axios = new BaseAxios('auth');
     const validate = verifySignInSchema.safeParse(data);
 
     currentState.username = username;
@@ -49,7 +48,7 @@ export const signInSubmit = async (currentState: DetailedRequest.SignInRequest, 
     try {
         const res = await AuthService.login(data);
         if (res.value)
-            axios.storeTokenInfo(res.value?.accessToken as string, res.value?.tokenType, res.value?.accessTokenExpires);
+            storeTokenInfo(res.value?.accessToken as string, res.value?.tokenType, res.value?.accessTokenExpires);
         return {
             ...currentState,
             errors: {},
@@ -204,33 +203,36 @@ export const applyJob = async (currentState: any, formData: FormData, temp: stri
     return { ...currentState, errors: {}, success: false, data: null };
 };
 
-export const settingPersonalProfile = async (currentState: any, formData: FormData) => {
+export const settingPersonalProfile = async (
+    currentState: PersonalProfileType
+): Promise<PersonalProfileType & { errors: {}; success: boolean }> => {
     const uploadPromises = [];
-    const avatarFile = formData.get('avatar') as File;
-    if (avatarFile.size > 0) {
+    // get avatar file from inputs
+    const avatarFile = currentState.avatarFile;
+    // because the url include name of file, so if the url not including name means file is different from url => upload to cloud
+    if (avatarFile && !currentState.avatarUrl?.includes(avatarFile.name) && avatarFile.size > 0) {
         const uploadAvatar = (async () => await UploadService.uploadFile(avatarFile))();
         uploadPromises.push(uploadAvatar);
+    } else {
+        uploadPromises.push((() => {})());
     }
 
-    const backgroundFile = formData.get('background') as File;
-    if (backgroundFile.size > 0) {
+    // get background file from inputs
+    const backgroundFile = currentState.backgroundFile;
+    // because the url include name of file, so if the url not including name means file is different from url => upload to cloud
+    if (backgroundFile && !currentState.backgroundUrl?.includes(backgroundFile.name) && backgroundFile.size > 0) {
         const uploadBackground = (async () => await UploadService.uploadFile(backgroundFile))();
         uploadPromises.push(uploadBackground);
+    } else {
+        uploadPromises.push((() => {})());
     }
 
-    const fullname = formData.get('fullname')?.toString() ?? '';
-    const phone = formData.get('phone')?.toString() ?? '';
-    const education = formData.get('education')?.toString() ?? '';
-    const experience = formData.get('experience')?.toString() ?? '';
-
-    const validation = updatePersonalProfile.safeParse({ fullname, phone });
-
+    const validation = updatePersonalProfile.safeParse({ fullname: currentState.fullname, phone: currentState.phone });
     if (!validation.success) {
         return {
             ...currentState,
             errors: validation.error.flatten().fieldErrors,
             success: false,
-            data: {},
         };
     }
 
@@ -238,56 +240,105 @@ export const settingPersonalProfile = async (currentState: any, formData: FormDa
         const [avatar, background] = await Promise.all(uploadPromises);
 
         const updatedProfile = await UserService.updatePersonalProfile({
-            fullName: fullname,
-            phone: phone,
-            education: education,
-            experience: experience,
+            fullName: currentState.fullname,
+            phone: currentState.phone,
+            education: currentState.education,
+            experience: currentState.experience,
             profileUrl: avatar?.fileUrl || currentState.avatarUrl,
             pageUrl: background?.fileUrl || currentState.backgroundUrl,
         });
 
+        // update current state
         currentState.avatarUrl = updatedProfile?.profileUrl ?? currentState.avatarUrl;
         currentState.backgroundUrl = updatedProfile?.pageUrl ?? currentState.backgroundUrl;
         currentState.fullname = updatedProfile?.fullName ?? currentState.fullname;
         currentState.phone = updatedProfile?.phone ?? currentState.phone;
         currentState.education = updatedProfile?.education ?? currentState.education;
         currentState.experience = updatedProfile?.experience ?? currentState.experience;
+        currentState.avatarFile = null;
+        currentState.backgroundFile = null;
 
         return { ...currentState, success: true, errors: {} };
     } catch (error) {
         handleErrorToast(error);
+        return { ...currentState, success: false, errors: {} };
     }
-    return currentState;
+};
+export const settingEmployerProfile = async (formData: FormData) => {
+    // Upload promises storage
+    const uploadPromises: Promise<any>[] = [];
+
+    let logoUrl = formData.get('logoUrl')?.toString() || '';
+    let backgroundImageUrl = formData.get('backgroundImageUrl')?.toString() || '';
+
+    const logoFile = formData.get('logoFile') as File;
+    if (logoFile && logoFile.size > 0) {
+        uploadPromises.push(
+            UploadService.uploadFile(logoFile).then((res) => {
+                logoUrl = res.fileUrl || ''; // Update logoUrl after successful upload
+            })
+        );
+    }
+
+    const backgroundFile = formData.get('backgroundFile') as File;
+    if (backgroundFile && backgroundFile.size > 0) {
+        uploadPromises.push(
+            UploadService.uploadFile(backgroundFile).then((res) => {
+                backgroundImageUrl = res.fileUrl || ''; // Update backgroundImageUrl after successful upload
+            })
+        );
+    }
+
+    try {
+        // Wait for all uploads to complete
+        await Promise.all(uploadPromises);
+
+        // Now update company profile with the correct URLs
+        await EnterpriseService.updateEnterpriseCompany({
+            logoUrl,
+            backgroundImageUrl,
+            name: formData.get('name')?.toString() || '',
+            description: formData.get('description')?.toString() || '',
+            phone: formData.get('phone')?.toString() || '',
+        });
+    } catch (error) {
+        handleErrorToast(error);
+        return { ...formData, success: false, errors: {} };
+    }
 };
 
-export const updateCandidateProfile = async (currentState: {
-    nationality: string;
-    dateOfBirth: string;
-    gender: string;
-    maritalStatus: string;
-    introduction: string;
-}) => {
+export const updateCandidateProfile = async (
+    currentState: CandidateProfileType
+): Promise<CandidateProfileType & { errors: {}; success: boolean }> => {
     const validation = updateCandidateProfileZ.safeParse(currentState);
 
     if (!validation.success) {
         return {
+            ...currentState,
             errors: validation.error.flatten().fieldErrors,
             success: false,
         };
     }
 
     try {
-        await UserService.updateCandidateProfile({
-            nationality: currentState.nationality,
-            dateOfBirth: currentState.dateOfBirth,
-            gender: currentState.gender,
-            maritalStatus: currentState.maritalStatus,
-            introduction: currentState.introduction,
+        const updatedProfile = await UserService.updateCandidateProfile({
+            nationality: currentState.nationality ?? '',
+            dateOfBirth: currentState.dateOfBirth ?? '',
+            gender: currentState.gender ?? '',
+            maritalStatus: currentState.maritalStatus ?? '',
+            introduction: currentState.introduction ?? '',
         });
 
-        return { success: true, errors: {} };
+        currentState.nationality = updatedProfile?.nationality ?? '';
+        currentState.dateOfBirth = updatedProfile?.dateOfBirth ?? '';
+        currentState.gender = updatedProfile?.gender ?? '';
+        currentState.maritalStatus = updatedProfile?.maritalStatus ?? '';
+        currentState.introduction = updatedProfile?.introduction ?? '';
+
+        return { ...currentState, success: true, errors: {} };
     } catch (error) {
         handleErrorToast(error);
+        return { ...currentState, success: false, errors: {} };
     }
 };
 
@@ -300,21 +351,20 @@ const regex = {
     TWITTER: /^(https?:\/\/)?(www\.)?(x|twitter)\.com\/[A-Za-z0-9_]+(\/)?$/,
 };
 
-export const updateCandidateSocialLinks = async (currentState: any, formData: FormData) => {
+export const updateCandidateSocialLinks = async (currentState: {
+    links: SocialLink[];
+}): Promise<{ success: boolean; errors: (string[] | null)[] }> => {
     let success = true;
-    const socialLinks = formData.getAll('link') as string[];
-    const socialTypes = formData.getAll('typeSocial') as SocialType[];
 
     const errors = [];
-    const links: SocialLink[] = [];
-    for (let i = 0; i < socialLinks.length; i++) {
-        links.push({ socialLink: socialLinks[i], socialType: socialTypes[i] });
-        const link = socialLinks[i];
-        if (!link) {
+    const links: SocialLink[] = currentState.links ?? [];
+    for (const link of links) {
+        if (!link.socialLink) {
             errors.push(['This field is required']);
             success = false;
-        } else if (!regex[socialTypes[i]].test(link)) {
-            errors.push([`This ${socialTypes[i].toLowerCase()} url is not a valid`]);
+        } else if (!regex[link.socialType].test(link.socialLink)) {
+            errors.push([`This ${link.socialType.toLowerCase()} url is not a valid`]);
+            success = false;
         } else {
             errors.push(null);
         }
@@ -322,17 +372,17 @@ export const updateCandidateSocialLinks = async (currentState: any, formData: Fo
 
     if (success) {
         try {
-            await WebsiteService.updateCandidateSocialLinks(links);
+            const linksWithoutId = links.map<Omit<SocialLink, 'websiteId'>>((link) => ({
+                socialLink: link.socialLink,
+                socialType: link.socialType,
+            }));
+            await WebsiteService.updateCandidateSocialLinks(linksWithoutId);
         } catch (error) {
             handleErrorToast(error);
         }
     }
 
-    currentState.socialLinks = socialLinks;
-    currentState.socialTypes = socialTypes;
-
     return {
-        ...currentState,
         success,
         errors,
     };
@@ -410,13 +460,18 @@ export const addTag = async (currentState: any, formData: FormData) => {
 export const addEnterprises = async (currentState: any, formData: FormData) => {
     const errors: Record<string, any> = {};
     const uploadPromises = [];
-    const logoFile = formData.get('logo') as File;
+    const logoFile =
+        (formData.get('logo') as File).size === 0 && currentState.logo
+            ? (currentState.logo as File)
+            : (formData.get('logo') as File);
     if (!logoFile || logoFile.size === 0) {
-        errors.logo = 'Profile picture is required';
+        errors.logo = 'Logo is required';
     } else {
         const uploadLogo = (async () => await UploadService.uploadFile(logoFile))();
         uploadPromises.push(uploadLogo);
+        currentState.logo = logoFile;
     }
+    currentState.logo = logoFile;
     currentState.name = formData.get('name')?.toString() ?? '';
     currentState.phone = formData.get('phone')?.toString() ?? '';
     currentState.email = formData.get('email')?.toString() ?? '';
@@ -452,11 +507,13 @@ export const addEnterprises = async (currentState: any, formData: FormData) => {
             enterpriseBenefits: currentState.enterpriseBenefits,
             companyVision: currentState.vision,
             logoUrl: logoFile?.fileUrl || currentState.logoUrl,
+            backgroundImageUrl: currentState.backgroundImageUrl,
             foundedIn: currentState.foundedIn,
             organizationType: currentState.organizationType,
             teamSize: currentState.size,
             industryType: currentState.industryType,
             bio: currentState.bio,
+            status: 'PENDING',
         });
 
         return { ...currentState, success: true, errors: {} };
@@ -464,4 +521,96 @@ export const addEnterprises = async (currentState: any, formData: FormData) => {
         handleErrorToast(error);
     }
     return { ...currentState, errors: {}, success: false, data: null };
+};
+
+export const updateRegisterEnterprice = async (currentState: any, formData: FormData) => {
+    const errors: Record<string, any> = {};
+    const uploadPromises = [];
+    const logoFile = formData.get('logo') as File;
+    let logoUrl = currentState.logoUrl;
+    if (logoFile && logoFile.size > 0) {
+        const uploadLogo = (async () => {
+            try {
+                const uploadedLogo = await UploadService.uploadFile(logoFile);
+                logoUrl = uploadedLogo.fileUrl;
+            } catch {
+                errors.logo = 'Failed to upload profile picture';
+            }
+        })();
+        uploadPromises.push(uploadLogo);
+    }
+    currentState.name = formData.get('name')?.toString() ?? '';
+    currentState.phone = formData.get('phone')?.toString() ?? '';
+    currentState.email = formData.get('email')?.toString() ?? '';
+    currentState.vision = formData.get('vision')?.toString() ?? '';
+    currentState.size = formData.get('size')?.toString() ?? '';
+    currentState.foundedIn = formData.get('foundedIn')?.toString() ?? '';
+    currentState.organizationType = formData.get('organizationType')?.toString() ?? '';
+    currentState.industryType = formData.get('industryType')?.toString() ?? '';
+    currentState.bio = formData.get('bio')?.toString() ?? '';
+    currentState.enterpriseBenefits = formData.get('enterpriseBenefits')?.toString() ?? '';
+    currentState.description = formData.get('description')?.toString() ?? '';
+
+    const validation = addEnterpriseSchema.safeParse(currentState);
+    if (!validation.success) {
+        Object.assign(errors, validation.error.flatten().fieldErrors);
+    }
+    if (Object.keys(errors).length > 0) {
+        return {
+            ...currentState,
+            errors,
+            success: false,
+            data: {},
+        };
+    }
+
+    try {
+        await Promise.all(uploadPromises);
+        await EnterpriseService.updateEnterprise(
+            {
+                name: currentState.name,
+                email: currentState.email,
+                phone: currentState.phone,
+                description: currentState.description,
+                enterpriseBenefits: currentState.enterpriseBenefits,
+                companyVision: currentState.vision,
+                logoUrl: logoUrl,
+                backgroundImageUrl: currentState.backgroundImageUrl,
+                foundedIn: currentState.foundedIn,
+                organizationType: currentState.organizationType,
+                teamSize: currentState.size,
+                industryType: currentState.industryType,
+                bio: currentState.bio,
+                status: 'PENDING',
+            },
+            currentState.id
+        );
+
+        return { ...currentState, success: true, errors: {} };
+    } catch (error: any) {
+        handleErrorToast(error);
+        return {
+            ...currentState,
+            errors: { general: 'An error occurred while updating the enterprise' },
+            success: false,
+        };
+    }
+};
+
+export const settingEmployerFounding = async (formData: FormData) => {
+    try {
+        await EnterpriseService.updateEnterpriseCompanyFounding({
+            organizationType: formData.get('organizationType')?.toString() || '',
+            industryType: formData.get('industryType')?.toString() || '',
+            teamSize: formData.get('teamSize')?.toString() || '',
+            foundedIn: formData.get('foundedIn') ? new Date(formData.get('foundedIn') as string) : new Date(),
+            email: formData.get('email')?.toString() || '',
+            bio: formData.get('bio')?.toString() || '',
+            companyVision: formData.get('companyVision')?.toString() || '',
+            description: formData.get('description')?.toString() || '',
+        });
+    } catch (error) {
+        handleErrorToast(error);
+        return { ...formData, success: false, errors: {} };
+    }
 };
