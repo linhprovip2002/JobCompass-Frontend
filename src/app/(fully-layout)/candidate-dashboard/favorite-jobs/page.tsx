@@ -1,9 +1,7 @@
 'use client';
 
 import React, { Fragment, Suspense, useState } from 'react';
-import {
-    PrimaryPagination,
-} from '@/components/ui/pagination';
+import { PrimaryPagination } from '@/components/ui/pagination';
 import { useSearchParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryKey } from '@/lib/react-query/keys';
@@ -12,7 +10,7 @@ import { DetailedRequest, Meta } from '@/types';
 import { Separator } from '@/components/ui/separator';
 import { handleErrorToast } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 import CardJobHorizontal from '@/components/custom-ui/card-job-horizontal';
 
 const ITEM_PER_PAGE = 10;
@@ -94,6 +92,7 @@ function PageContent() {
                                       job={job}
                                       handleUnMark={() => removeFavoriteJobMutation.mutate({ jobId: job.jobId })}
                                       mark={true}
+                                      showMarkButton={true}
                                   />
                                   <Separator />
                               </Fragment>

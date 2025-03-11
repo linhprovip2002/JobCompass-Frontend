@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SearchForm from '@/components/custom-ui/search-bar';
@@ -66,14 +66,16 @@ export default function Page() {
                             <SelectValue placeholder="12 per page" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectGroup>
+                            <SelectGroup className="space-y-2 py-2">
                                 <SelectItem value="12">12 per page</SelectItem>
                                 <SelectItem value="24">24 per page</SelectItem>
+                                <SelectItem value="36">36 per page</SelectItem>
+                                <SelectItem value="48">48 per page</SelectItem>
                             </SelectGroup>
                         </SelectContent>
                     </Select>
 
-                    <div className="flex items-center justify-center border rounded-md h-[48px] w-[88px]">
+                    <div className="flex items-center justify-center border rounded-md h-[48px] w-[88px] gap-2">
                         <Button
                             variant="ghost"
                             size="md"
@@ -95,7 +97,9 @@ export default function Page() {
             </div>
 
             <div className="mx-auto container max-w-screen-xl">
-                <ListCardJobs viewType={viewType} />
+                <Suspense fallback={<span>Loading...</span>}>
+                    <ListCardJobs viewType={viewType} />
+                </Suspense>
             </div>
         </main>
     );

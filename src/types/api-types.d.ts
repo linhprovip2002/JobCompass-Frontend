@@ -1,4 +1,5 @@
-import { Job } from './entities';
+import { UserType } from './common-types';
+import { Enterprise, Job, SocialLink, Tag } from './entities';
 
 export interface ApiResponse<T> {
     payload: {
@@ -56,6 +57,18 @@ export namespace DetailedResponse {
     }
 
     export interface FavoriteJobs extends GetAllJobs {}
+
+    export type GetAllCvByIdProfile = CV[];
+    export type GetAllTag = {
+        data: Tag[];
+        meta: Meta;
+    };
+    export type GetCategories = Categories[];
+    export type GetAddressByEnterprisesId = Enterprise & {
+        addresses: Address[];
+    };
+    export type GetDetailJob = Job;
+    export type getDataRegisterEnterprise = Enterprise;
 }
 
 export namespace DetailedRequest {
@@ -105,4 +118,82 @@ export namespace DetailedRequest {
     }
     export interface ParamListJobsCredentials extends Pagination {}
     export interface FavoriteJobs extends Pagination {}
+    export interface ApplyJobCoverLette {
+        cvId: string;
+        coverLetter: string;
+        jobId: string;
+    }
+
+    export interface UpdateEnterprisesCompanyFounding {
+        foundedIn: Date;
+        organizationType: string;
+        teamSize: string;
+        industryType: string;
+        bio: string;
+        email: string;
+        companyVision: string;
+        description: string;
+    }
+
+    export interface UpdatePersonalProfile {
+        profileUrl: string;
+        pageUrl: string;
+        fullName: string;
+        phone?: string;
+        education?: string;
+        experience?: string;
+    }
+
+    export interface UpdateCandidateProfile {
+        nationality: string;
+        dateOfBirth: string;
+        gender: string;
+        maritalStatus: string;
+        introduction: string;
+    }
+
+    export type UpdateCandidateSocialLinks = SocialLink[];
+    export interface postJobCredentials {
+        name: string;
+        lowestWage: number;
+        highestWage: number;
+        description: string;
+        responsibility: string;
+        type: string;
+        experience: number;
+        deadline: string;
+        introImg: string;
+        status: boolean;
+        education: string;
+        tagIds: string[];
+        categoryIds: string[];
+        address: string[];
+    }
+    export interface PostEnterprisesCredentials {
+        name: string;
+        email: string;
+        phone: string;
+        description: string;
+        enterpriseBenefits: string;
+        companyVision: string;
+        logoUrl: string;
+        backgroundImageUrl: string;
+        foundedIn: string;
+        organizationType: string;
+        teamSize: string;
+        industryType: string;
+        bio: string;
+        status: string;
+    }
+    export interface UpdateEnterprisesCompany {
+        name: string | null;
+        logoUrl?: string | null;
+        backgroundImageUrl?: string | null;
+        description: string | null;
+        phone: string | null;
+    }
+
+    export interface GetTagsByName extends Pagination {
+        name: string;
+    }
 }

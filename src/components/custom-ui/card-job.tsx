@@ -3,19 +3,27 @@ import { Job } from '@/types';
 import { motion } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
+import { motionVariant } from '@/lib/motion-variants';
 
 export default function CardJob(props: { job: Job }) {
     const { job } = props;
-    const addresses = `${props.job.addresses[0]?.city}, ${props.job.addresses[0]?.country}`;
+    const addresses =
+        job.addresses?.[0]?.city && job.addresses?.[0]?.country
+            ? `${job.addresses[0].city}, ${job.addresses[0].country}`
+            : 'Unknown location';
+
     return (
-        <Link href={'/'}>
+        <Link href={`/single-job?id=${job.jobId}`}>
             <motion.div
-                className="bg-white rounded-3xl p-6 border hover:border-[#0A65CC] hover:shadow-lg transition-shadow flex flex-col justify-center xl:w-[424px] xl:h-[204px]"
-                whileHover={{ y: -5 }}
+                className="bg-white rounded-3xl p-6 border hover:border-[#0A65CC] transition-shadow flex flex-col justify-center xl:w-[424px] xl:h-[204px]"
+                variants={motionVariant.cardVariants}
+                initial="hidden"
+                animate="visible"
+                whileHover="hover"
             >
                 <div className="flex items-start justify-between mb-4 ">
                     <div className="flex items-start gap-4">
-                        <div className=" relative rounded-lg overflow-hidden border flex-shrink-0 bg-gray-50">
+                        <div className=" relative rounded-lg overflow-hidden border-none flex-shrink-0 bg-gray-50">
                             <img
                                 src={job.introImg || 'https://www.foxsports.com/soccer/cristiano-ronaldo-player'}
                                 alt={job.enterprise.name || 'Company logo'}

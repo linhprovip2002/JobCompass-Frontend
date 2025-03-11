@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { inter } from '@/components/font';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import ReactQueryProvider from './providers/react-query-provider';
+import { UserProvider } from '@/contexts/user-context';
+import { EnterpriseProvider } from '@/contexts/enterprise-context';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
     title: 'JobCompass',
@@ -18,9 +19,23 @@ export default function RootLayout({
     return (
         <html suppressHydrationWarning={true} lang="en">
             <body className={`${inter.className} antialiased`}>
-                <ToastContainer />
+                <Toaster
+                    richColors={true}
+                    position="top-right"
+                    theme="system"
+                    closeButton={true}
+                    toastOptions={{
+                        style: {
+                            borderRadius: '4px',
+                        },
+                    }}
+                />
                 <ReactQueryProvider>
-                    <main>{children}</main>
+                    <UserProvider>
+                        <EnterpriseProvider>
+                            <main>{children}</main>
+                        </EnterpriseProvider>
+                    </UserProvider>
                 </ReactQueryProvider>
             </body>
         </html>

@@ -1,6 +1,6 @@
 import { InternalAxiosRequestConfig } from 'axios';
 import { BaseAxios } from './base-axios';
-import { AuthService } from '@/services';
+import { getStoredTokenInfo, storeTokenInfo } from '../auth';
 
 export class AuthAxios extends BaseAxios {
     constructor(prefix: string) {
@@ -8,14 +8,19 @@ export class AuthAxios extends BaseAxios {
         this._initRequestInterceptor();
     }
 
+    private async _refreshToken() {
+        const { AuthService } = await import('@/services/auth.service');
+        return AuthService.refreshToken();
+    }
+
     private _initRequestInterceptor() {
         this.axiosInstance.interceptors.request.use(
             async (config: InternalAxiosRequestConfig) => {
-                const { isLogged, accessToken, accessType, tokenExpires } = this.getStoredTokenInfo();
+                const { isLogged, accessToken, accessType, tokenExpires } = getStoredTokenInfo();
                 if (isLogged && tokenExpires && tokenExpires < Date.now()) {
-                    const res = await AuthService.refreshToken();
+                    const res = await this._refreshToken();
                     if (res) {
-                        this.storeTokenInfo(res.accessToken, res.tokenType, res.accessTokenExpires);
+                        storeTokenInfo(res.accessToken, res.tokenType, res.accessTokenExpires);
                         config.headers['Authorization'] = `${res.tokenType} ${res.accessToken}`;
                         return config;
                     }

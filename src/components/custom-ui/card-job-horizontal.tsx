@@ -8,6 +8,7 @@ import { ButtonMark } from '../custom-ui/button-mark';
 import { Button } from '@/components/ui/button';
 import { LuArrowRight } from 'react-icons/lu';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 export default function CardJobHorizontal(props: {
     job: Job;
@@ -15,9 +16,14 @@ export default function CardJobHorizontal(props: {
     mark?: boolean;
     handleUnMark?: () => void;
     handleMark?: () => void;
+    showMarkButton?: boolean;
 }) {
     const { job } = props;
-    const addresses = `${props.job.addresses[0]?.city}, ${props.job.addresses[0]?.country}`;
+    const addresses =
+        job.addresses?.[0]?.city && job.addresses?.[0]?.country
+            ? `${job.addresses[0].city}, ${job.addresses[0].country}`
+            : 'Unknown location';
+    const router = useRouter();
     return (
         <motion.div
             className="space-y-6 w-full"
@@ -79,8 +85,19 @@ export default function CardJobHorizontal(props: {
                     </div>
                 </div>
                 <div className="flex-1 flex items-center justify-end gap-3">
-                    <ButtonMark handleUnMark={props.handleUnMark} handleMark={props.handleMark} mark={!!props.mark} />
-                    <Button className="group" variant="third" size="lg">
+                    {props.showMarkButton && (
+                        <ButtonMark
+                            handleUnMark={props.handleUnMark}
+                            handleMark={props.handleMark}
+                            mark={!!props.mark}
+                        />
+                    )}
+                    <Button
+                        className="group"
+                        variant="third"
+                        size="lg"
+                        onClick={() => router.push(`/single-job?id=${job.jobId}`)}
+                    >
                         Apply Now <LuArrowRight className="group-hover:translate-x-2 transition-all" />
                     </Button>
                 </div>

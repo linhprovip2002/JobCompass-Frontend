@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import crypto from 'crypto';
 import { errorKeyMessage } from './message-keys';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -39,8 +39,10 @@ export const getClientSideCookie = (name: string): string | undefined => {
 };
 
 export const handleErrorToast = (err: any) => {
-    if (err.props.title) {
+    if (err.props?.title) {
         const errorMessage = errorKeyMessage[err.props.title as keyof typeof errorKeyMessage];
         toast.error(errorMessage);
+    } else {
+        toast.error('Oops! Please try again');
     }
 };
